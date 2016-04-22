@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Ejemplo</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    GESTIÓN DE CARRERAS
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    UNIVALLE
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Resources">
+                                <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+
+                            </p:submenu>
+
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form id="formulario"><!-- Comentarios -->
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:panelGrid columns="4">
+                            <h:outputText value="Número:"/>
+                            <p:inputText id="txtNumero" binding="#{carreraVista.txtNumeroCarrera}" />
+
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText id="txtNombre" binding="#{carreraVista.txtNombreCarrera}" />
+
+                            <p:commandButton value="Registrar" binding="#{carreraVista.btnRegistrar}" action="#{carreraVista.accion_registrar()}" update="formulario"/>
+                            <p:commandButton value="Modificar" binding="#{carreraVista.btnModificar}" disabled="true"/>
+                            <p:commandButton value="Eliminar" binding="#{carreraVista.btnEliminar}" disabled="true"/>
+                            <p:commandButton value="Limpiar" binding="#{carreraVista.btnLimpiar}" action="#{carreraVista.limpiar()}" update="formulario"/> 
+                        </p:panelGrid>
+                        <p:dataTable var="carrera" value="#{carreraVista.listaCarreras}" rows="3"
+                                     paginator="true" rowsPerPageTemplate="5,10,15">
+                            <p:column headerText="Número">
+                                <h:outputText value="#{carrera.numerocarrera}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{carrera.nombrecarrera}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

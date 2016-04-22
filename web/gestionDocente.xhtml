@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Ejemplo Docente</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    GESTION DE DOCENTES
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    UNIVALLE
+                </p:layoutUnit>
+
+               <p:layoutUnit position="west" size="175" header="..." collapsible="true">
+                    <h:form>
+                    <p:menu>
+                        <p:submenu label="Menú">
+                            <p:menuitem value="Carreras" url="faces/gestionCarreras.xhtml" />
+                            <p:menuitem value="Estudiantes" url="faces/gestionEstudiante.xhtml" />
+                            <p:menuitem value="Docentes" url="faces/gestionDocente.xhtml" />
+                            <p:menuitem value="Materias" url="faces/gestionMaterias.xhtml" />
+
+                        </p:submenu>
+
+                    </p:menu>
+                   </h:form>     
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form id="formulario"><!--comentarios paraseleccionar-->
+                         <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:panelGrid columns="11">
+                            <f:facet name="informacion Docentes"></f:facet>
+                            <h:outputText value="Numero Documento"/>
+                            <p:inputText id="txtNumero" binding="#{docenteVista.txtdocumentoDocente}"/>
+                            <h:outputText value="Nombre"/>
+                            <p:inputText id="txtNombre" binding="#{docenteVista.txtNombreDocente}"/>
+                            <h:outputText value="Apellido"/>
+                            <p:inputText id="txtApellido" binding="#{docenteVista.txtApellidoDocente}"/>
+                            <h:outputText value="Correo"/>
+                            <p:inputText id="txtCorreo" binding="#{docenteVista.txtCorreoDocente}"/>
+                            <h:outputText value="Profesion"/>
+                            <p:inputText id="txtProfesion" binding="#{docenteVista.txtProfesionDocente}"/>
+                            <h:outputText value="Telefono"/>
+                            <p:inputText id="txttelefono" binding="#{docenteVista.txtTlelefonodocente}"/>
+                            <h:outputText value="Clave"/>
+                            <p:inputText id="txtClave" binding="#{docenteVista.txtClaveDocente}"/>
+                            <p:commandButton value="Registrar" binding="#{docenteVista.btnRegistrar}" action="#{docenteVista.accion_registrar()}" update="formulario"/>
+                            <p:commandButton value="Modificar" binding="#{docenteVista.btnModificar}" disabled="true" action="#{docenteVista.modificar}" update="formulario"/>
+                            <p:commandButton value="Eliminar" binding="#{docenteVista.btnEliminar}" disabled="true"/>
+                            <p:commandButton value="Limpiar" binding="#{docenteVista.btnLimpiar}" action="#{docenteVista.limpiar()}" update="formulario"/>
+                            <p:commandButton value="Descargar Reporte" binding="#{docenteVista.btnReporte}" action="#{docenteVista.generarReporteDocente}" update="formulario"/>
+                     </p:panelGrid>
+                        
+                         <p:dataTable var="docente" value="#{docenteVista.listaDocente}" rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+                                     selectionMode="single"
+                                     selection="#{docenteVista.selectedDocente}"
+                                     rowKey="#{docente.documentodocente}">
+                             <p:ajax event="rowSelect" listener="#{docenteVista.seleccionar}" update=":formulario" />
+                            <p:column headerText="Numero Documento">
+                                <h:outputText value="#{docente.documentodocente}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{docente.nombredocente}" />
+                            </p:column>
+                             <p:column headerText="Apellido">
+                                 <h:outputText value="#{docente.apellidodocente}" />
+                            </p:column>
+                             <p:column headerText="Correo">
+                                 <h:outputText value="#{docente.correodocente}" />
+                            </p:column>
+                             <p:column headerText="Profesion">
+                                 <h:outputText value="#{docente.profesiondocente}" />
+                            </p:column>
+                             <p:column headerText="Clave">
+                                 <h:outputText value="#{docente.clavedocente}" />
+                            </p:column>
+
+                      
+                        </p:dataTable>
+                         <p:dataTable var="materia" value="#{docenteVista.listaMaterias}" 
+                                      selectionMode="multiple" selection="#{docenteVista.listaMateriasSeleccionadas}" rowKey="#{materia.numeromateria}">
+                             <p:column headerText="Número">
+                                 <h:outputText value="#{materia.numeromateria}"/>
+                             </p:column>
+                              <p:column headerText="Nombre">
+                                  <h:outputText value="#{materia.nombremateria}"/>
+                             </p:column>
+                              <p:column headerText="Carrera">
+                                  <h:outputText value="#{materia.numerocarrera.nombrecarrera}"/>
+                             </p:column>
+                         </p:dataTable>
+                         <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

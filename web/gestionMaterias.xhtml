@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Ejemplo</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    GESTIÓN DE MATERIAS
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    UNIVALLE
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Resources">
+                                <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                                <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                                <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                                <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+
+                            </p:submenu>
+
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form id="formulario"><!-- Comentarios -->
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:panelGrid columns="4">
+                            <h:outputText value="Número:"/>
+                            <p:inputText id="txtNumero" binding="#{materiaVista.txtNumero}" />
+
+                            <h:outputText value="Nombre:"/>
+                            <p:inputText id="txtNombre" binding="#{materiaVista.txtNombre}" />
+
+                            <h:outputText value="Créditos"/>
+                            <p:inputText id="txtCreditos" binding="#{materiaVista.txtcreditos}" />
+
+                            <h:outputText value="Carrera"/>
+                            <p:selectOneMenu id="cmbCarrera" binding="#{materiaVista.cmbCarrera}">
+                                <f:selectItem itemValue="Seleccione" itemLabel="Seleccione"/>
+                                <f:selectItems value="#{materiaVista.opcionesCarrera}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Registrar" binding="#{materiaVista.btnRegistrar}" action="#{materiaVista.registrar()}" update="formulario"/>
+                            <p:commandButton value="Modificar" binding="#{materiaVista.btnModificar}" action="#{materiaVista.modificar}" disabled="true" update="formulario"/>
+                            
+                            
+                            <p:commandButton value="Eliminar" binding="#{materiaVista.btnEliminar}" disabled="true" actionListener="#{materiaVista.eliminar}" update="formulario">
+                                <p:confirm header="Confirmación" message="Está seguro que deseea eliminar la materia?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            
+                            
+                            
+                            <p:commandButton value="Limpiar" binding="#{materiaVista.btnLimpiar}" action="#{materiaVista.limpiar()}" update="formulario"/> 
+                        </p:panelGrid>
+                        <p:dataTable id="tabla" var="materia" value="#{materiaVista.listaMaterias}" rows="3"
+                                     paginator="true" rowsPerPageTemplate="5,10,15"
+                                     selectionMode="single"
+                                     selection="#{materiaVista.selectMateria}"
+                                     rowKey="#{materia.numeromateria}">
+                            <p:ajax event="rowSelect" listener="#{materiaVista.onRowSelect}" update=":formulario" />
+                            <p:column headerText="Número">
+                                <h:outputText value="#{materia.numeromateria}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{materia.nombremateria}" />
+                            </p:column>
+
+                            <p:column headerText="Creditos">
+                                <h:outputText value="#{materia.creditosmateria}" />
+                            </p:column>
+
+                            <p:column headerText="Carrera">
+                                <h:outputText value="#{materia.numerocarrera.nombrecarrera}" />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
