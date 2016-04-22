@@ -9,7 +9,7 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>Ejemplo Docente</title>
+                <title>Docentes</title>
             </f:facet>
         </h:head>
 
@@ -18,7 +18,7 @@
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    GESTION DE DOCENTES
+                    GESTIÓN DE DOCENTES
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
@@ -27,17 +27,15 @@
 
                <p:layoutUnit position="west" size="175" header="..." collapsible="true">
                     <h:form>
-                    <p:menu>
-                        <p:submenu label="Menú">
-                            <p:menuitem value="Carreras" url="../faces/gestionCarreras.xhtml" />
-                            <p:menuitem value="Estudiantes" url="../faces/gestionEstudiante.xhtml" />
-                            <p:menuitem value="Docentes" url="../faces/gestionDocente.xhtml" />
-                            <p:menuitem value="Materias" url="../faces/gestionMaterias.xhtml" />
-
-                        </p:submenu>
-
-                    </p:menu>
-                   </h:form>     
+                        <p:menu>
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Carreras" url="../faces/gestionCarreras.xhtml" />
+                                <p:menuitem value="Docentes" url="../faces/gestionDocentes.xhtml" />
+                                <p:menuitem value="Materias" url="../faces/gestionMaterias.xhtml" />
+                                <p:menuitem value="Estudiantes" url="../faces/gestionEstudiantes.xhtml" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>     
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">

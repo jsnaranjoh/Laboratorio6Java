@@ -27,7 +27,7 @@
     </filter>
     <filter-mapping>
         <filter-name>EstudianteFiltro</filter-name>
-        <url-pattern>/faces/gestionEstudiante.xhtml</url-pattern>
+        <url-pattern>/faces/gestionEstudiantes.xhtml</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>DocenteFiltro</filter-name>
@@ -35,7 +35,7 @@
     </filter>
     <filter-mapping>
         <filter-name>DocenteFiltro</filter-name>
-        <url-pattern>/faces/gestionDocente.xhtml</url-pattern>
+        <url-pattern>/faces/gestionDocentes.xhtml</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>IndexFiltro</filter-name>

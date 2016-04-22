@@ -73,9 +73,9 @@ public class SesionVista {
             FacesContext context =FacesContext.getCurrentInstance();
             ExternalContext extContext = context.getExternalContext();
             urlD = extContext.encodeActionURL(context.getApplication().
-                    getViewHandler().getActionURL(context, "/gestionDocente.xhtml"));
+                    getViewHandler().getActionURL(context, "/gestionDocentes.xhtml"));
             urlE = extContext.encodeActionURL(context.getApplication().
-                    getViewHandler().getActionURL(context, "/gestionEstudiante.xhtml"));
+                    getViewHandler().getActionURL(context, "/gestionEstudiantes.xhtml"));
             Long documento = Long.parseLong(txtUsuario.getValue().toString());
             String clave = txtClave.getValue().toString();
             Estudiante e = sesionLogica.iniciarSesionEstudiante(documento, clave);
