@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package filtros;
+package filtro;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -21,7 +21,7 @@ import modelo.Docente;
  *
  * @author Estudiante
  */
-public class FiltroIndex implements Filter{
+public class IndexFiltro implements Filter{
 
     private FilterConfig configuration;
     

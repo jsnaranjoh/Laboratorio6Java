@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package filtros;
+package filtro;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -21,7 +21,7 @@ import modelo.Docente;
  *
  * @author Estudiante
  */
-public class FiltroDocente implements Filter{
+public class DocenteFiltro implements Filter{
 
     private FilterConfig configuration;
     
@@ -39,19 +39,19 @@ public class FiltroDocente implements Filter{
         {
             if(!tipo.equals("docente"))
             {
-               ((HttpServletResponse)response).sendRedirect("../faces/SesionInvalida.xhtml");
+               ((HttpServletResponse)response).sendRedirect("../faces/sesionInvalida.xhtml");
             }else{
                 Docente docente =(Docente)((HttpServletRequest)request).getSession().getAttribute("usuario");
                 if(docente!=null){                    
                     chain.doFilter(request, response);
                 }else{
-                    ((HttpServletResponse)response).sendRedirect("../faces/SesionInvalida.xhtml");
+                    ((HttpServletResponse)response).sendRedirect("../faces/sesionInvalida.xhtml");
                 }
             
             }
         }
         }catch(NullPointerException e){
-            ((HttpServletResponse)response).sendRedirect("../faces/SesionInvalida.xhtml");
+            ((HttpServletResponse)response).sendRedirect("../faces/sesionInvalida.xhtml");
         }
     }
 
