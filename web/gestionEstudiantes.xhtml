@@ -35,13 +35,14 @@
                                 <p:menuitem value="Estudiantes" url="../faces/gestionEstudiantes.xhtml" />
                             </p:submenu>
                         </p:menu>
+                        <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
                     </h:form>     
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                    <h:form id="formulario"><!--comentarios paraseleccionar-->
+                    <h:form id="formulario">
                          <p:growl id="growl" showDetail="true" sticky="true" />
-                        <p:panelGrid columns="11">
+                        <p:panelGrid columns="4">
                             <f:facet name="informacion Estudiantes"></f:facet>
                             <h:outputText value="Numero Documento"/>
                             <p:inputText id="txtNumero" binding="#{estudianteVista.txtDocumentoEstudiante}"/>
@@ -87,7 +88,6 @@
 
                       
                         </p:dataTable>
-                         <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
                     </h:form>
                 </p:layoutUnit>
 

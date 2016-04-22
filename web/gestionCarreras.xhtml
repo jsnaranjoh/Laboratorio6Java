@@ -35,11 +35,12 @@
                                 <p:menuitem value="Estudiantes" url="../faces/gestionEstudiantes.xhtml" />
                             </p:submenu>
                         </p:menu>
+                        <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
                     </h:form>     
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                    <h:form id="formulario"><!-- Comentarios -->
+                    <h:form id="formulario">
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <p:panelGrid columns="4">
                             <h:outputText value="Número:"/>
