@@ -39,11 +39,11 @@ public class FiltroIndex implements Filter{
             if(tipo.equals("docente"))
             {
                 System.out.println("Es docente");
-               ((HttpServletResponse)response).sendRedirect("/demoJavaWeb/faces/gestionDocente.xhtml");
+               ((HttpServletResponse)response).sendRedirect("/Laboratorio6Java/faces/gestionDocente.xhtml");
             }else{
                 if(tipo.equals("estudiante")){  
                     System.out.println("Es estudiante");
-                    ((HttpServletResponse)response).sendRedirect("/demoJavaWeb/faces/gestionEstudiante.xhtml");
+                    ((HttpServletResponse)response).sendRedirect("/Laboratorio6Java/faces/gestionEstudiante.xhtml");
                 }else{
                     chain.doFilter(request, response);
                 }
