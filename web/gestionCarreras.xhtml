@@ -43,12 +43,13 @@
                     <h:form id="formulario">
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <p:panelGrid columns="4">
-                            <h:outputText value="Número:"/>
+                            <h:outputText value="Número"/>
                             <p:inputText id="txtNumero" binding="#{carreraVista.txtNumeroCarrera}" />
 
-                            <h:outputText value="Nombre:"/>
+                            <h:outputText value="Nombre"/>
                             <p:inputText id="txtNombre" binding="#{carreraVista.txtNombreCarrera}" />
-
+                        </p:panelGrid>
+                        <p:panelGrid columns="4">
                             <p:commandButton value="Registrar" binding="#{carreraVista.btnRegistrar}" action="#{carreraVista.accion_registrar()}" update="formulario"/>
                             <p:commandButton value="Modificar" binding="#{carreraVista.btnModificar}" disabled="true"/>
                             <p:commandButton value="Eliminar" binding="#{carreraVista.btnEliminar}" disabled="true"/>

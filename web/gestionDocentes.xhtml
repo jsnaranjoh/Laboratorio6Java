@@ -42,9 +42,9 @@
                 <p:layoutUnit position="center">
                     <h:form id="formulario">
                          <p:growl id="growl" showDetail="true" sticky="true" />
-                        <p:panelGrid columns="4">
+                        <p:panelGrid columns="6">
                             <f:facet name="informacion Docentes"></f:facet>
-                            <h:outputText value="Numero Documento"/>
+                            <h:outputText value="Documento"/>
                             <p:inputText id="txtNumero" binding="#{docenteVista.txtdocumentoDocente}"/>
                             <h:outputText value="Nombre"/>
                             <p:inputText id="txtNombre" binding="#{docenteVista.txtNombreDocente}"/>
@@ -52,12 +52,14 @@
                             <p:inputText id="txtApellido" binding="#{docenteVista.txtApellidoDocente}"/>
                             <h:outputText value="Correo"/>
                             <p:inputText id="txtCorreo" binding="#{docenteVista.txtCorreoDocente}"/>
-                            <h:outputText value="Profesion"/>
+                            <h:outputText value="Profesión"/>
                             <p:inputText id="txtProfesion" binding="#{docenteVista.txtProfesionDocente}"/>
-                            <h:outputText value="Telefono"/>
+                            <h:outputText value="Teléfono"/>
                             <p:inputText id="txttelefono" binding="#{docenteVista.txtTlelefonodocente}"/>
                             <h:outputText value="Clave"/>
                             <p:inputText id="txtClave" binding="#{docenteVista.txtClaveDocente}"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="5">
                             <p:commandButton value="Registrar" binding="#{docenteVista.btnRegistrar}" action="#{docenteVista.accion_registrar()}" update="formulario"/>
                             <p:commandButton value="Modificar" binding="#{docenteVista.btnModificar}" disabled="true" action="#{docenteVista.modificar}" update="formulario"/>
                             <p:commandButton value="Eliminar" binding="#{docenteVista.btnEliminar}" disabled="true"/>

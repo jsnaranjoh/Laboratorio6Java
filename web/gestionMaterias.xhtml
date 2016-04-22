@@ -43,10 +43,10 @@
                     <h:form id="formulario">
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <p:panelGrid columns="4">
-                            <h:outputText value="Número:"/>
+                            <h:outputText value="Número"/>
                             <p:inputText id="txtNumero" binding="#{materiaVista.txtNumero}" />
 
-                            <h:outputText value="Nombre:"/>
+                            <h:outputText value="Nombre"/>
                             <p:inputText id="txtNombre" binding="#{materiaVista.txtNombre}" />
 
                             <h:outputText value="Créditos"/>
@@ -57,22 +57,18 @@
                                 <f:selectItem itemValue="Seleccione" itemLabel="Seleccione"/>
                                 <f:selectItems value="#{materiaVista.opcionesCarrera}"/>
                             </p:selectOneMenu>
-
+                        </p:panelGrid>
+                        <p:panelGrid columns="4">
                             <p:commandButton value="Registrar" binding="#{materiaVista.btnRegistrar}" action="#{materiaVista.registrar()}" update="formulario"/>
                             <p:commandButton value="Modificar" binding="#{materiaVista.btnModificar}" action="#{materiaVista.modificar}" disabled="true" update="formulario"/>
-                            
-                            
                             <p:commandButton value="Eliminar" binding="#{materiaVista.btnEliminar}" disabled="true" actionListener="#{materiaVista.eliminar}" update="formulario">
                                 <p:confirm header="Confirmación" message="Está seguro que deseea eliminar la materia?" icon="ui-icon-alert" />
                             </p:commandButton>
+                            <p:commandButton value="Limpiar" binding="#{materiaVista.btnLimpiar}" action="#{materiaVista.limpiar()}" update="formulario"/>
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>
-                            
-                            
-                            
-                            <p:commandButton value="Limpiar" binding="#{materiaVista.btnLimpiar}" action="#{materiaVista.limpiar()}" update="formulario"/> 
+                            </p:confirmDialog> 
                         </p:panelGrid>
                         <p:dataTable id="tabla" var="materia" value="#{materiaVista.listaMaterias}" rows="3"
                                      paginator="true" rowsPerPageTemplate="5,10,15"
@@ -88,7 +84,7 @@
                                 <h:outputText value="#{materia.nombremateria}" />
                             </p:column>
 
-                            <p:column headerText="Creditos">
+                            <p:column headerText="Créditos">
                                 <h:outputText value="#{materia.creditosmateria}" />
                             </p:column>
 
