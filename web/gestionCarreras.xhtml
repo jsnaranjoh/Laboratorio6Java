@@ -11,6 +11,11 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Carreras</title>
             </f:facet>
+            <style>
+                .ui-menu {
+                    width: 140px;
+                }
+            </style>
         </h:head>
 
         <h:body>
@@ -25,7 +30,7 @@
                     UNIVALLE
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="..." collapsible="true">
+                <p:layoutUnit position="west" header="Colapsar" collapsible="true">
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menú">
@@ -35,7 +40,7 @@
                                 <p:menuitem value="Estudiantes" url="../faces/gestionEstudiantes.xhtml" />
                             </p:submenu>
                         </p:menu>
-                        <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
+                        <p:commandButton id="cerrarSesion" value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
                     </h:form>     
                 </p:layoutUnit>
 
