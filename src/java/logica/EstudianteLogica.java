@@ -13,7 +13,7 @@ import persistencia.EstudianteFacadeLocal;
 
 /**
  *
- * @author NOREÑA
+ * @author jsnar
  */
 @Stateless
 public class EstudianteLogica implements EstudianteLogicaLocal {

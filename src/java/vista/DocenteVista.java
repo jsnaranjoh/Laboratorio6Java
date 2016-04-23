@@ -21,7 +21,7 @@ import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author NOREÑA
+ * @author jsnar
  */
 @Named(value = "docenteVista")
 @RequestScoped

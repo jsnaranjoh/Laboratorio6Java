@@ -11,7 +11,7 @@ import modelo.Docente;
 
 /**
  *
- * @author NOREÑA
+ * @author jsnar
  */
 @Local
 public interface DocenteLogicaLocal {

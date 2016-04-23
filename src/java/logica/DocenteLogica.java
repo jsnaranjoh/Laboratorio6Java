@@ -13,7 +13,7 @@ import persistencia.DocenteFacadeLocal;
 
 /**
  *
- * @author NOREÑA
+ * @author jsnar
  */
 @Stateless
 public class DocenteLogica implements DocenteLogicaLocal {

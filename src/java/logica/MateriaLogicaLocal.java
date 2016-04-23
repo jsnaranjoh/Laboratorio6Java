@@ -11,7 +11,7 @@ import modelo.Materia;
 
 /**
  *
- * @author NOREÑA
+ * @author jsnar
  */
 @Local
 public interface MateriaLogicaLocal {

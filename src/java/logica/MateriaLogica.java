@@ -13,7 +13,7 @@ import persistencia.MateriaFacadeLocal;
 
 /**
  *
- * @author NOREÑA
+ * @author jsnar
  */
 @Stateless
 public class MateriaLogica implements MateriaLogicaLocal {
