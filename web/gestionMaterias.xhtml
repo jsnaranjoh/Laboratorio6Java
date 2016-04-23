@@ -38,6 +38,7 @@
                                 <p:menuitem value="Docentes" url="../faces/gestionDocentes.xhtml" />
                                 <p:menuitem value="Materias" url="../faces/gestionMaterias.xhtml" />
                                 <p:menuitem value="Estudiantes" url="../faces/gestionEstudiantes.xhtml" />
+                                <p:menuitem value="Matrículas" url="../faces/gestionMatriculas.xhtml" />
                             </p:submenu>
                         </p:menu>
                         <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
@@ -58,7 +59,7 @@
                             <p:inputText id="txtCreditos" binding="#{materiaVista.txtCreditos}" />
 
                             <h:outputText value="Carrera"/>
-                            <p:selectOneMenu id="cmbCarrera" binding="#{materiaVista.cmbCarreras}">
+                            <p:selectOneMenu id="cmbCarreras" binding="#{materiaVista.cmbCarreras}">
                                 <f:selectItem itemValue="Seleccione" itemLabel="Seleccione"/>
                                 <f:selectItems value="#{materiaVista.itemsCarreras}"/>
                             </p:selectOneMenu>

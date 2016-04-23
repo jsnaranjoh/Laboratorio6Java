@@ -38,6 +38,7 @@
                                 <p:menuitem value="Docentes" url="../faces/gestionDocentes.xhtml" />
                                 <p:menuitem value="Materias" url="../faces/gestionMaterias.xhtml" />
                                 <p:menuitem value="Estudiantes" url="../faces/gestionEstudiantes.xhtml" />
+                                <p:menuitem value="Matrículas" url="../faces/gestionMatriculas.xhtml" />
                             </p:submenu>
                         </p:menu>
                         <p:commandButton value="Cerrar Sesión" action="#{sesionVista.cerrarSesion_action}"/>
@@ -93,11 +94,6 @@
                             <p:column headerText="Teléfono">
                                 <h:outputText value="#{docente.telefonodocente}" />
                             </p:column>
-                             <p:column headerText="Clave">
-                                 <h:outputText value="#{docente.clavedocente}" />
-                            </p:column>
-
-                      
                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>
