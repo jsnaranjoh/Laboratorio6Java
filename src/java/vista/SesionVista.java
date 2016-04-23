@@ -85,7 +85,7 @@ public class SesionVista {
             } catch (Exception ex) {}
             String clave = txtClave.getValue().toString();
             
-            sesionLogica.buscarCamposIncorrectosOVacios(documento, clave);
+            sesionLogica.buscarCamposInvalidosOVacios(documento, clave);
             Estudiante e = sesionLogica.iniciarSesionEstudiante(documento, clave);
             if(e!=null){
                 extContext.getSessionMap().put("tipo", "estudiante");

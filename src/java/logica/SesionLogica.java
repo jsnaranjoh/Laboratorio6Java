@@ -26,7 +26,7 @@ public class SesionLogica implements SesionLogicaLocal {
     private DocenteFacadeLocal docenteDAO;
 
     @Override
-    public void buscarCamposIncorrectosOVacios(Long documento, String clave) throws Exception {
+    public void buscarCamposInvalidosOVacios(Long documento, String clave) throws Exception {
         if(documento==null) {
             throw new Exception("Ingrese un usuario válido.");
         }
@@ -40,7 +40,7 @@ public class SesionLogica implements SesionLogicaLocal {
         Estudiante e = estudianteDAO.find(documento);
         if(e!=null) {
             if(!e.getClaveestudiante().equals(clave)) {
-                throw new Exception("La contraseña es incorrecta");
+                throw new Exception("La contraseña es incorrecta.");
             }
         }
         return e;
@@ -51,7 +51,7 @@ public class SesionLogica implements SesionLogicaLocal {
         Docente d = docenteDAO.find(documento);
         if(d!=null) {
             if(!d.getClavedocente().equals(clave)) {
-                throw new Exception("La contraseña es incorrecta");
+                throw new Exception("La contraseña es incorrecta.");
             }
         } else {
             throw new Exception("El usuario no existe.");
