@@ -3,60 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vista;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import logica.CarreraLogicaLocal;
 import modelo.Carrera;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author DILOVE
+ * @author jsnar
  */
-@ManagedBean(name = "carreraVista")
+@Named(value = "carreraVista")
 @RequestScoped
 public class CarreraVista {
-    private InputText txtNumeroCarrera;
-    private InputText txtNombreCarrera;
+
+    private InputText txtNumero;
+    private InputText txtNombre;
     private CommandButton btnRegistrar;
     private CommandButton btnModificar;
     private CommandButton btnEliminar;
     private CommandButton btnLimpiar;
     private List<Carrera> listaCarreras;
-    private Carrera selectedCarrera;  
-
+    private Carrera selectedCarrera;
+    
     @EJB
     private CarreraLogicaLocal carreraLogica;
-    /**
-     * Creates a new instance of CarreraVista
-     */
-    public CarreraVista() {
+
+    public InputText getTxtNumero() {
+        return txtNumero;
     }
 
-    public InputText getTxtNumeroCarrera() {
-        return txtNumeroCarrera;
+    public void setTxtNumero(InputText txtNumero) {
+        this.txtNumero = txtNumero;
     }
 
-    public void setTxtNumeroCarrera(InputText txtNumeroCarrera) {
-        this.txtNumeroCarrera = txtNumeroCarrera;
+    public InputText getTxtNombre() {
+        return txtNombre;
     }
 
-    public InputText getTxtNombreCarrera() {
-        return txtNombreCarrera;
-    }
-
-    public void setTxtNombreCarrera(InputText txtNombreCarrera) {
-        this.txtNombreCarrera = txtNombreCarrera;
+    public void setTxtNombre(InputText txtNombre) {
+        this.txtNombre = txtNombre;
     }
 
     public CommandButton getBtnRegistrar() {
@@ -92,9 +88,9 @@ public class CarreraVista {
     }
 
     public List<Carrera> getListaCarreras() {
-        if(listaCarreras==null){
+        if(listaCarreras == null) {
             try {
-                listaCarreras = carreraLogica.findAll();
+                listaCarreras = carreraLogica.consultarTodas();
             } catch (Exception ex) {
                 Logger.getLogger(CarreraVista.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -113,31 +109,85 @@ public class CarreraVista {
     public void setSelectedCarrera(Carrera selectedCarrera) {
         this.selectedCarrera = selectedCarrera;
     }
+ 
+    // Mostrar por interfaz la carrera seleccionada
+    public void onRowSelect(SelectEvent event) {
+        Carrera carreraSeleccionada = (Carrera) event.getObject();
+        this.txtNumero.setValue(carreraSeleccionada.getNumerocarrera());
+        this.txtNombre.setValue(carreraSeleccionada.getNombrecarrera());
+        
+        // Se deshabilita el botón registrar para permitir que la carrera se puede modificar o eliminar       
+        this.btnRegistrar.setDisabled(true);
+        this.btnModificar.setDisabled(false);
+        this.btnEliminar.setDisabled(false);
+        this.txtNumero.setDisabled(true);
+    }
     
-    
-    public void accion_registrar(){
+    // Limpia los campos y reinicia los valores
+    public void limpiar(){
+        this.txtNumero.setValue("");
+        this.txtNombre.setValue("");
+        this.txtNumero.setDisabled(false);
+        this.btnRegistrar.setDisabled(false);
+        this.btnModificar.setDisabled(true);
+        this.btnEliminar.setDisabled(true);
+    }
+
+    // Método registrar
+    public void action_registrar(){
         try {
-            Carrera nuevaCarrera = new Carrera();
-            nuevaCarrera.setNumerocarrera(Integer.parseInt(txtNumeroCarrera.getValue().toString()));
-            nuevaCarrera.setNombrecarrera(txtNombreCarrera.getValue().toString());
-            carreraLogica.create(nuevaCarrera);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "La carrera se registró correctamente."));
+            Carrera objCarrera = new Carrera();
+            objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString()));
+            objCarrera.setNombrecarrera(this.txtNombre.getValue().toString());
+            
+            carreraLogica.registrarCarrera(objCarrera);
             listaCarreras = null;
             limpiar();
-        }catch(NumberFormatException e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El número de la carrera debe ser numerico"));
-        }catch (Exception  ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de creación de carrera", "La carrera fue registrada con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
     }
     
-    public void limpiar(){
-        txtNumeroCarrera.setValue("");
-        txtNombreCarrera.setValue("");
-        btnRegistrar.setDisabled(false);
-        btnModificar.setDisabled(true);
-        btnEliminar.setDisabled(true);
+    // Método modificar
+    public void action_modificar(){
+        try {
+            Carrera objCarrera = new Carrera();
+            objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString()));
+            objCarrera.setNombrecarrera(this.txtNombre.getValue().toString());
+            
+            carreraLogica.modificarCarrera(objCarrera);
+            listaCarreras = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de modificación de carrera", "La carrera fue modificada con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
+        }
     }
     
+    // Método eliminar
+    public void action_eliminar(){
+        try {
+            Carrera objCarrera = new Carrera();
+            objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString()));
+            objCarrera.setNombrecarrera(this.txtNombre.getValue().toString());
+            
+            carreraLogica.eliminarCarrera(objCarrera);
+            listaCarreras = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de eliminación de carrera", "La carrera fue eliminada con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
+        }
+    }
+    
+    /**
+     * Creates a new instance of CarreraVista
+     */
+    public CarreraVista() {
+    }
     
 }

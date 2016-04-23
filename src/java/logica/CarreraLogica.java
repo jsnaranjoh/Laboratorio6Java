@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica;
 
 import java.util.List;
@@ -14,85 +13,91 @@ import persistencia.CarreraFacadeLocal;
 
 /**
  *
- * @author DILOVE
+ * @author jsnar
  */
 @Stateless
 public class CarreraLogica implements CarreraLogicaLocal {
     @EJB
-    private CarreraFacadeLocal carreraDAO;
+    CarreraFacadeLocal carreraDAO;
     
     @Override
-    public void create(Carrera carrera) throws Exception {
-        Carrera objCarrera = carreraDAO.find(carrera.getNumerocarrera());
-        if(carrera!=null){
-            if(carrera.getNumerocarrera()==null){
-                throw new Exception("Número de carrera Obligatorio");                
-            }else if(carrera.getNombrecarrera()==null || carrera.getNombrecarrera().equals("")){
-                throw new Exception("El nombre es obligatorio");
-            }
+    public void registrarCarrera(Carrera carrera) throws Exception {
+        if(carrera==null){
+            throw new Exception("Campos Vacios.");
         }else{
-            throw new Exception("La carrera no tiene información");
+            if(carrera.getNumerocarrera()==null || carrera.getNumerocarrera()==0){
+                throw new Exception("El número de la Carrera es Obligatorio.");
+            }
+            if(carrera.getNombrecarrera().equals("") || carrera.getNombrecarrera().equals("")){
+                throw new Exception("El nombre de la Carrera es Obligatorio.");
+            }
         }
         
-        if(objCarrera==null){
+        Carrera objCarrera = carreraDAO.find(carrera.getNumerocarrera());
+        if(objCarrera!=null){
+            throw new Exception("La carrera Ya Existe.");
+        }else{
             carreraDAO.create(carrera);
-        }else{
-            throw new Exception("La carrera ya esta registrada");
         }
     }
 
     @Override
-    public void edit(Carrera carrera) throws Exception {
-        Carrera objCarrera = carreraDAO.find(carrera.getNumerocarrera());
-        if(carrera!=null){
-            if(carrera.getNumerocarrera()==null){
-                throw new Exception("Número de carrera Obligatorio");                
-            }else if(carrera.getNombrecarrera()==null || carrera.getNombrecarrera().equals("")){
-                throw new Exception("El nombre es obligatorio");
-            }
+    public void modificarCarrera(Carrera carrera) throws Exception {
+        if(carrera==null){
+            throw new Exception("Campos Vacios.");
         }else{
-            throw new Exception("La carrera no tiene información");
+            if(carrera.getNumerocarrera()==null || carrera.getNumerocarrera()==0){
+                throw new Exception("El número de la Carrera es Obligatorio.");
+            }
+            if(carrera.getNombrecarrera().equals("") || carrera.getNombrecarrera().equals("")){
+                throw new Exception("El nombre de la Carrera es Obligatorio.");
+            }
         }
         
+        Carrera objCarrera = carreraDAO.find(carrera.getNumerocarrera());
         if(objCarrera==null){
-            throw new Exception("carrera no existe. No se puede modificar");
+            throw new Exception("La carrera a Modificar No Existe.");
         }else{
-            carreraDAO.edit(carrera);
+            objCarrera.setNombrecarrera(carrera.getNombrecarrera());
+            carreraDAO.edit(objCarrera);
         }
     }
 
     @Override
-    public void remove(Carrera carrera) throws Exception {
-        Carrera objCarrera = carreraDAO.find(carrera.getNumerocarrera());
-        if(carrera!=null){
-            if(carrera.getNumerocarrera()==null){
-                throw new Exception("Número de carrera Obligatorio");                
-            }else if(carrera.getNombrecarrera()==null || carrera.getNombrecarrera().equals("")){
-                throw new Exception("El nombre es obligatorio");
-            }
+    public void eliminarCarrera(Carrera carrera) throws Exception {
+        if(carrera==null){
+            throw new Exception("Campos Vacios.");
         }else{
-            throw new Exception("La carrera no tiene información");
+            if(carrera.getNumerocarrera()==null || carrera.getNumerocarrera()==0){
+                throw new Exception("El número de la Carrera es Obligatorio.");
+            }
         }
         
+        Carrera objCarrera = carreraDAO.find(carrera.getNumerocarrera());
         if(objCarrera==null){
-            throw new Exception("carrera no existe. No se puede modificar");
+            throw new Exception("La carrera a Eliminar No Existe.");
         }else{
+            if(objCarrera.getMateriaList().size()>0){
+                throw new Exception("La carrera tiene materias Asociadas.");
+            }
             carreraDAO.remove(carrera);
         }
     }
 
     @Override
-    public Carrera find(Integer codigoCarrera) throws Exception {
-        if(codigoCarrera!=null){
-            return carreraDAO.find(codigoCarrera);
+    public Carrera consultarxCodigo(Integer codigo) throws Exception {
+        if(codigo==null || codigo==0){
+            throw new Exception("El código es Obligatorio.");
         }else{
-            throw new Exception("El codigo para consultar es obligatorio");
+            return carreraDAO.find(codigo);
         }
     }
 
     @Override
-    public List<Carrera> findAll() throws Exception {
+    public List<Carrera> consultarTodas() throws Exception {
         return carreraDAO.findAll();
     }
-    
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 }

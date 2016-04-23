@@ -11,13 +11,13 @@ import modelo.Estudiante;
 
 /**
  *
- * @author Estudiante
+ * @author NOREÑA
  */
 @Local
 public interface EstudianteLogicaLocal {
-      void create (Estudiante estudiante)throws Exception;
-    void edit (Estudiante estudiante)throws Exception;
-    void remove (Estudiante estudiante)throws Exception;
-    Estudiante find (Long documentoestudiante)throws Exception;
-    List<Estudiante> findAll()throws Exception;
+    public void registrarEstudiante(Estudiante estudiante) throws Exception;
+    public void modificarEstudiante(Estudiante estudiante) throws Exception;
+    public void eliminarEstudiante(Estudiante estudiante) throws Exception;
+    public Estudiante consultarxcodigo(Integer codigo) throws Exception;
+    public List<Estudiante> consultarTodos() throws Exception;
 }

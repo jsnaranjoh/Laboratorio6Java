@@ -47,34 +47,31 @@
                 <p:layoutUnit position="center">
                     <h:form id="formulario">
                          <p:growl id="growl" showDetail="true" sticky="true" />
-                        <p:panelGrid columns="6">>
+                        <p:panelGrid columns="6">
                             <h:outputText value="Documento"/>
-                            <p:inputText id="txtNumero" binding="#{estudianteVista.txtDocumentoEstudiante}"/>
+                            <p:inputText id="txtNumero" binding="#{estudianteVista.txtDocumento}"/>
                             <h:outputText value="Nombre"/>
-                            <p:inputText id="txtNombre" binding="#{estudianteVista.txtNombreEstudiante}"/>
+                            <p:inputText id="txtNombre" binding="#{estudianteVista.txtNombre}"/>
                             <h:outputText value="Apellido"/>
-                            <p:inputText id="txtApellido" binding="#{estudianteVista.txtApellidoEstudiante}"/>
+                            <p:inputText id="txtApellido" binding="#{estudianteVista.txtApellido}"/>
                             <h:outputText value="Correo"/>
-                            <p:inputText id="txtCorreo" binding="#{estudianteVista.txtCorreoEstudiante}"/>
+                            <p:inputText id="txtCorreo" binding="#{estudianteVista.txtCorreo}"/>
                             <h:outputText value="Semestre"/>
-                            <p:inputText id="txtSemestre" binding="#{estudianteVista.txtSemestreEstudiante}"/>
+                            <p:inputText id="txtSemestre" binding="#{estudianteVista.txtSemestre}"/>
                             <h:outputText value="Clave"/>
-                            <p:inputText id="txtClave" binding="#{estudianteVista.txtClaveEstudiante}"/>
+                            <p:inputText id="txtClave" binding="#{estudianteVista.txtClave}"/>
                         </p:panelGrid>
                         <p:panelGrid columns="4">
-                            <p:commandButton value="Registrar" binding="#{estudianteVista.btnRegistrar}" action="#{estudianteVista.accion_registrar()}" update="formulario"/>
-                            <p:commandButton value="Modificar" binding="#{estudianteVista.btnModificar}" disabled="true"/>
-                            <p:commandButton value="Eliminar" binding="#{estudianteVista.btnEliminar}" disabled="true"/>
-                            <p:commandButton value="Limpiar" binding="#{estudianteVista.btnLimpiar}" action="#{estudianteVista.limpiar()}" update="formulario"/>
-                     </p:panelGrid>
-                        
-                         <p:dataTable var="estudiante" value="#{estudianteVista.listaEstudiante}" rows="10"
-                                     paginator="true"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="5,10,15">
-                            <p:column headerText="Documento">
-                                <h:outputText value="#{estudiante.documentoestudiante}" />
-                            </p:column>
+                            <p:commandButton value="Registrar" binding="#{estudianteVista.btnRegistrar}" action="#{estudianteVista.action_registrar()}" update=":formulario"/> 
+                            <p:commandButton value="Modificar" binding="#{estudianteVista.btnModificar}" action="#{estudianteVista.action_modificar()}" update=":formulario"/>
+                            <p:commandButton value="Eliminar" binding="#{estudianteVista.btnEliminar}" action="#{estudianteVista.action_eliminar()}" update=":formulario"/>
+                            <p:commandButton value="Limpiar" binding="#{estudianteVista.btnLimpiar}" action="#{estudianteVista.limpiar()}" update=":formulario"/>
+                        </p:panelGrid>
+                         <p:dataTable id="eventsDT" var="estudiante" value="#{estudianteVista.listaEstudiantes}" selectionMode="single" selection="#{estudianteVista.selectedEstudiante}" rowKey="#{estudiante.documentoestudiante}">
+                            <f:facet name="header">
+                                Estudiantes
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{estudianteVista.onRowSelect}" update=":formulario" />
 
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{estudiante.nombreestudiante}" />

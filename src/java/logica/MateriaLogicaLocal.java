@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica;
 
 import java.util.List;
@@ -12,14 +11,13 @@ import modelo.Materia;
 
 /**
  *
- * @author DILOVE
+ * @author NOREÑA
  */
 @Local
 public interface MateriaLogicaLocal {
-    public void registrar(Materia materia) throws Exception;
-    public void modificar(Materia materia) throws Exception;
-    public void eliminar(Materia materia) throws Exception;
-    public List<Materia> consultar() throws Exception;
-    public Materia consultarPorCodigo(Integer codigoMateria) throws Exception;
-    public List<Materia> consultarMateriasDocente (String nombre) throws Exception;
+    public void registrarMateria(Materia materia) throws Exception;
+    public void modificarMateria(Materia materia) throws Exception;
+    public void eliminarMateria(Materia materia) throws Exception;
+    public Materia consultarxCodigo(Integer codigo) throws Exception;
+    public List<Materia> consultarTodas() throws Exception;
 }

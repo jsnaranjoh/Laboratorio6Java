@@ -49,23 +49,25 @@
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <p:panelGrid columns="4">
                             <h:outputText value="Número"/>
-                            <p:inputText id="txtNumero" binding="#{carreraVista.txtNumeroCarrera}" />
+                            <p:inputText id="txtNumero" binding="#{carreraVista.txtNumero}" />
 
                             <h:outputText value="Nombre"/>
-                            <p:inputText id="txtNombre" binding="#{carreraVista.txtNombreCarrera}" />
+                            <p:inputText id="txtNombre" binding="#{carreraVista.txtNombre}" />
                         </p:panelGrid>
                         <p:panelGrid columns="4">
-                            <p:commandButton value="Registrar" binding="#{carreraVista.btnRegistrar}" action="#{carreraVista.accion_registrar()}" update="formulario"/>
-                            <p:commandButton value="Modificar" binding="#{carreraVista.btnModificar}" disabled="true"/>
-                            <p:commandButton value="Eliminar" binding="#{carreraVista.btnEliminar}" disabled="true"/>
-                            <p:commandButton value="Limpiar" binding="#{carreraVista.btnLimpiar}" action="#{carreraVista.limpiar()}" update="formulario"/> 
+                            <p:commandButton value="Registrar" binding="#{carreraVista.btnRegistrar}" action="#{carreraVista.action_registrar()}" update=":formulario"/> 
+                            <p:commandButton value="Modificar" binding="#{carreraVista.btnModificar}" action="#{carreraVista.action_modificar()}" update=":formulario"/>
+                            <p:commandButton value="Eliminar" binding="#{carreraVista.btnEliminar}" action="#{carreraVista.action_eliminar()}" update=":formulario"/>
+                            <p:commandButton value="Limpiar" binding="#{carreraVista.btnLimpiar}" action="#{carreraVista.limpiar()}" update=":formulario"/>
                         </p:panelGrid>
-                        <p:dataTable var="carrera" value="#{carreraVista.listaCarreras}" rows="3"
-                                     paginator="true" rowsPerPageTemplate="5,10,15">
+                        <p:dataTable id="eventsDT" var="carrera" value="#{carreraVista.listaCarreras}" selectionMode="single" selection="#{carreraVista.selectedCarrera}" rowKey="#{carrera.numerocarrera}">
+                            <f:facet name="header">
+                                Carreras
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{carreraVista.onRowSelect}" update=":formulario" />
                             <p:column headerText="Número">
                                 <h:outputText value="#{carrera.numerocarrera}" />
                             </p:column>
-
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{carrera.nombrecarrera}" />
                             </p:column>

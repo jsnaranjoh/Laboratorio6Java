@@ -50,40 +50,34 @@
                         <p:panelGrid columns="6">
                             <f:facet name="informacion Docentes"></f:facet>
                             <h:outputText value="Documento"/>
-                            <p:inputText id="txtNumero" binding="#{docenteVista.txtdocumentoDocente}"/>
+                            <p:inputText id="txtNumero" binding="#{docenteVista.txtDocumento}"/>
                             <h:outputText value="Nombre"/>
-                            <p:inputText id="txtNombre" binding="#{docenteVista.txtNombreDocente}"/>
+                            <p:inputText id="txtNombre" binding="#{docenteVista.txtNombre}"/>
                             <h:outputText value="Apellido"/>
-                            <p:inputText id="txtApellido" binding="#{docenteVista.txtApellidoDocente}"/>
+                            <p:inputText id="txtApellido" binding="#{docenteVista.txtApellido}"/>
                             <h:outputText value="Correo"/>
-                            <p:inputText id="txtCorreo" binding="#{docenteVista.txtCorreoDocente}"/>
+                            <p:inputText id="txtCorreo" binding="#{docenteVista.txtCorreo}"/>
                             <h:outputText value="Profesión"/>
-                            <p:inputText id="txtProfesion" binding="#{docenteVista.txtProfesionDocente}"/>
+                            <p:inputText id="txtProfesion" binding="#{docenteVista.txtProfesion}"/>
                             <h:outputText value="Teléfono"/>
-                            <p:inputText id="txttelefono" binding="#{docenteVista.txtTlelefonodocente}"/>
+                            <p:inputText id="txttelefono" binding="#{docenteVista.txtTelefono}"/>
                             <h:outputText value="Clave"/>
-                            <p:inputText id="txtClave" binding="#{docenteVista.txtClaveDocente}"/>
+                            <p:inputText id="txtClave" binding="#{docenteVista.txtClave}"/>
                         </p:panelGrid>
-                        <p:panelGrid columns="5">
-                            <p:commandButton value="Registrar" binding="#{docenteVista.btnRegistrar}" action="#{docenteVista.accion_registrar()}" update="formulario"/>
-                            <p:commandButton value="Modificar" binding="#{docenteVista.btnModificar}" disabled="true" action="#{docenteVista.modificar}" update="formulario"/>
-                            <p:commandButton value="Eliminar" binding="#{docenteVista.btnEliminar}" disabled="true"/>
-                            <p:commandButton value="Limpiar" binding="#{docenteVista.btnLimpiar}" action="#{docenteVista.limpiar()}" update="formulario"/>
-                            <p:commandButton value="Descargar Reporte" binding="#{docenteVista.btnReporte}" action="#{docenteVista.generarReporteDocente}" update="formulario"/>
-                     </p:panelGrid>
-                        
-                         <p:dataTable var="docente" value="#{docenteVista.listaDocente}" rows="10"
-                                     paginator="true"
-                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="5,10,15"
-                                     selectionMode="single"
-                                     selection="#{docenteVista.selectedDocente}"
-                                     rowKey="#{docente.documentodocente}">
-                             <p:ajax event="rowSelect" listener="#{docenteVista.seleccionar}" update=":formulario" />
-                            <p:column headerText="Numero Documento">
+                        <p:panelGrid columns="4">
+                            <p:commandButton value="Registrar" binding="#{docenteVista.btnRegistrar}" action="#{docenteVista.action_registrar()}" update=":formulario"/> 
+                            <p:commandButton value="Modificar" binding="#{docenteVista.btnModificar}" action="#{docenteVista.action_modificar()}" update=":formulario"/>
+                            <p:commandButton value="Eliminar" binding="#{docenteVista.btnEliminar}" action="#{docenteVista.action_eliminar()}" update=":formulario"/>
+                            <p:commandButton value="Limpiar" binding="#{docenteVista.btnLimpiar}" action="#{docenteVista.limpiar()}" update=":formulario"/>
+                        </p:panelGrid>
+                         <p:dataTable id="eventsDT" var="docente" value="#{docenteVista.listaDocentes}" selectionMode="single" selection="#{docenteVista.selectedDocente}" rowKey="#{docente.documentodocente}">
+                            <f:facet name="header">
+                                Docentes
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{docenteVista.onRowSelect}" update=":formulario" />
+                            <p:column headerText="Documento">
                                 <h:outputText value="#{docente.documentodocente}" />
                             </p:column>
-
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{docente.nombredocente}" />
                             </p:column>
@@ -93,8 +87,11 @@
                              <p:column headerText="Correo">
                                  <h:outputText value="#{docente.correodocente}" />
                             </p:column>
-                             <p:column headerText="Profesion">
+                            <p:column headerText="Profesión">
                                  <h:outputText value="#{docente.profesiondocente}" />
+                            </p:column>
+                            <p:column headerText="Teléfono">
+                                <h:outputText value="#{docente.telefonodocente}" />
                             </p:column>
                              <p:column headerText="Clave">
                                  <h:outputText value="#{docente.clavedocente}" />
@@ -102,18 +99,6 @@
 
                       
                         </p:dataTable>
-                         <p:dataTable var="materia" value="#{docenteVista.listaMaterias}" 
-                                      selectionMode="multiple" selection="#{docenteVista.listaMateriasSeleccionadas}" rowKey="#{materia.numeromateria}">
-                             <p:column headerText="Número">
-                                 <h:outputText value="#{materia.numeromateria}"/>
-                             </p:column>
-                              <p:column headerText="Nombre">
-                                  <h:outputText value="#{materia.nombremateria}"/>
-                             </p:column>
-                              <p:column headerText="Carrera">
-                                  <h:outputText value="#{materia.numerocarrera.nombrecarrera}"/>
-                             </p:column>
-                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>
 

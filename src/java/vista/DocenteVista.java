@@ -5,120 +5,101 @@
  */
 package vista;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import logica.DocenteLogicaLocal;
-import logica.MateriaLogicaLocal;
 import modelo.Docente;
-import modelo.Materia;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author Estudiante
+ * @author NOREÑA
  */
-@ManagedBean
+@Named(value = "docenteVista")
 @RequestScoped
 public class DocenteVista {
-private InputText txtdocumentoDocente;
-private InputText txtNombreDocente;
-private InputText txtApellidoDocente;
-private InputText txtCorreoDocente;
-private InputText txtTlelefonodocente;
-private InputText txtProfesionDocente;
-private InputText txtClaveDocente;
-private CommandButton btnRegistrar;
-private CommandButton btnModificar;
-private CommandButton btnLimpiar;
-private CommandButton btnEliminar;
-private CommandButton btnReporte;
-private List<Docente> listaDocente;
-private List<Materia> listaMaterias;
-private List<Materia> listaMateriasSeleccionadas;
-private Docente selectedDocente;
 
-@EJB
-private DocenteLogicaLocal docentelogica;
-
-@EJB
-private MateriaLogicaLocal materiaLogica;
-    /**
-     * Creates a new instance of DocenteVista
-     */
-    public DocenteVista() {
+    private InputText txtDocumento;
+    private InputText txtNombre;
+    private InputText txtApellido;
+    private InputText txtCorreo;
+    private InputText txtTelefono;
+    private InputText txtProfesion;
+    private String txtClave;
+    
+    private CommandButton btnRegistrar;
+    private CommandButton btnModificar;
+    private CommandButton btnEliminar;
+    private CommandButton btnLimpiar;
+    
+    private List<Docente> listaDocentes;
+    private Docente selectedDocente;
+    
+    @EJB
+    private DocenteLogicaLocal docenteLogica;
+    
+    public InputText getTxtDocumento() {
+        return txtDocumento;
     }
 
-    public InputText getTxtdocumentoDocente() {
-        return txtdocumentoDocente;
+    public void setTxtDocumento(InputText txtDocumento) {
+        this.txtDocumento = txtDocumento;
     }
 
-    public void setTxtdocumentoDocente(InputText txtdocumentoDocente) {
-        this.txtdocumentoDocente = txtdocumentoDocente;
+    public InputText getTxtNombre() {
+        return txtNombre;
     }
 
-    public InputText getTxtNombreDocente() {
-        return txtNombreDocente;
+    public void setTxtNombre(InputText txtNombre) {
+        this.txtNombre = txtNombre;
     }
 
-    public void setTxtNombreDocente(InputText txtNombreDocente) {
-        this.txtNombreDocente = txtNombreDocente;
+    public InputText getTxtApellido() {
+        return txtApellido;
     }
 
-    public InputText getTxtApellidoDocente() {
-        return txtApellidoDocente;
+    public void setTxtApellido(InputText txtApellido) {
+        this.txtApellido = txtApellido;
     }
 
-    public void setTxtApellidoDocente(InputText txtApellidoDocente) {
-        this.txtApellidoDocente = txtApellidoDocente;
+    public InputText getTxtCorreo() {
+        return txtCorreo;
     }
 
-    public InputText getTxtCorreoDocente() {
-        return txtCorreoDocente;
+    public void setTxtCorreo(InputText txtCorreo) {
+        this.txtCorreo = txtCorreo;
     }
 
-    public void setTxtCorreoDocente(InputText txtCorreoDocente) {
-        this.txtCorreoDocente = txtCorreoDocente;
+    public InputText getTxtTelefono() {
+        return txtTelefono;
     }
 
-    public InputText getTxtTlelefonodocente() {
-        return txtTlelefonodocente;
+    public void setTxtTelefono(InputText txtTelefono) {
+        this.txtTelefono = txtTelefono;
     }
 
-    public void setTxtTlelefonodocente(InputText txtTlelefonodocente) {
-        this.txtTlelefonodocente = txtTlelefonodocente;
+    public InputText getTxtProfesion() {
+        return txtProfesion;
     }
 
-    public InputText getTxtProfesionDocente() {
-        return txtProfesionDocente;
+    public void setTxtProfesion(InputText txtProfesion) {
+        this.txtProfesion = txtProfesion;
     }
 
-    public void setTxtProfesionDocente(InputText txtProfesionDocente) {
-        this.txtProfesionDocente = txtProfesionDocente;
+    public String getTxtClave() {
+        return txtClave;
     }
 
-    public InputText getTxtClaveDocente() {
-        return txtClaveDocente;
-    }
-
-    public void setTxtClaveDocente(InputText txtClaveDocente) {
-        this.txtClaveDocente = txtClaveDocente;
+    public void setTxtClave(String txtClave) {
+        this.txtClave = txtClave;
     }
 
     public CommandButton getBtnRegistrar() {
@@ -137,14 +118,6 @@ private MateriaLogicaLocal materiaLogica;
         this.btnModificar = btnModificar;
     }
 
-    public CommandButton getBtnLimpiar() {
-        return btnLimpiar;
-    }
-
-    public void setBtnLimpiar(CommandButton btnLimpiar) {
-        this.btnLimpiar = btnLimpiar;
-    }
-
     public CommandButton getBtnEliminar() {
         return btnEliminar;
     }
@@ -153,19 +126,27 @@ private MateriaLogicaLocal materiaLogica;
         this.btnEliminar = btnEliminar;
     }
 
-    public List<Docente> getListaDocente() {
-        if(listaDocente== null){
+    public CommandButton getBtnLimpiar() {
+        return btnLimpiar;
+    }
+
+    public void setBtnLimpiar(CommandButton btnLimpiar) {
+        this.btnLimpiar = btnLimpiar;
+    }
+
+    public List<Docente> getListaDocentes() {
+        if(listaDocentes == null) {
             try {
-                listaDocente=docentelogica.findAll();
+                listaDocentes = docenteLogica.consultarTodos();
             } catch (Exception ex) {
                 Logger.getLogger(DocenteVista.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return listaDocente;
+        return listaDocentes;
     }
 
-    public void setListaDocente(List<Docente> listaDocente) {
-        this.listaDocente = listaDocente;
+    public void setListaDocentes(List<Docente> listaDocentes) {
+        this.listaDocentes = listaDocentes;
     }
 
     public Docente getSelectedDocente() {
@@ -174,156 +155,113 @@ private MateriaLogicaLocal materiaLogica;
 
     public void setSelectedDocente(Docente selectedDocente) {
         this.selectedDocente = selectedDocente;
+    }    
+    
+    // Mostrar por interfaz el docente seleccionado
+    public void onRowSelect(SelectEvent event) {
+        this.selectedDocente = (Docente) event.getObject();
+        
+        this.txtDocumento.setValue(selectedDocente.getDocumentodocente());
+        this.txtNombre.setValue(selectedDocente.getNombredocente());
+        this.txtApellido.setValue(selectedDocente.getApellidodocente());
+        this.txtCorreo.setValue(selectedDocente.getCorreodocente());
+        this.txtTelefono.setValue(selectedDocente.getTelefonodocente());
+        this.txtProfesion.setValue(selectedDocente.getProfesiondocente());
+        this.txtClave = selectedDocente.getClavedocente();
+        
+        // Se deshabilita el botón registrar para permitir que el docente se puede modificar o eliminar       
+        this.btnRegistrar.setDisabled(true);
+        this.btnModificar.setDisabled(false);
+        this.btnEliminar.setDisabled(false);
+        this.txtDocumento.setDisabled(true);
     }
-     public void accion_registrar() {
+    
+    // Limpia los campos y reinicia los valores
+    public void limpiar(){
+        this.txtDocumento.setValue("");
+        this.txtNombre.setValue("");
+        this.txtApellido.setValue("");
+        this.txtCorreo.setValue("");
+        this.txtTelefono.setValue("");
+        this.txtProfesion.setValue("");
+        this.txtClave = "";
+        
+        this.txtDocumento.setDisabled(false);
+        this.btnRegistrar.setDisabled(false);
+        this.btnModificar.setDisabled(true);
+        this.btnEliminar.setDisabled(true);
+    }
+    
+    // Método registrar
+    public void action_registrar(){
         try {
-            Docente nuevoDocente = new Docente();
-            nuevoDocente.setDocumentodocente(Long.parseLong(txtdocumentoDocente.getValue().toString()));
-            nuevoDocente.setNombredocente(txtNombreDocente.getValue().toString());
-            nuevoDocente.setApellidodocente(txtApellidoDocente.getValue().toString());
-            nuevoDocente.setCorreodocente(txtCorreoDocente.getValue().toString());
-            nuevoDocente.setTelefonodocente(txtTlelefonodocente.getValue().toString());
-            nuevoDocente.setProfesiondocente(txtProfesionDocente.getValue().toString());
-            nuevoDocente.setClavedocente(txtClaveDocente.getValue().toString());
-           docentelogica.create(nuevoDocente);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El docente se  registro correctamente"));
-            listaDocente = null;
-        } catch (NumberFormatException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El numero del documento  debe ser un numero y no letras"));
+            Docente objDocente = new Docente();
+            objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString()));
+            objDocente.setNombredocente(this.txtNombre.getValue().toString());
+            objDocente.setApellidodocente(this.txtApellido.getValue().toString());
+            objDocente.setCorreodocente(this.txtCorreo.getValue().toString());
+            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
+            objDocente.setProfesiondocente(this.txtProfesion.getValue().toString());
+            objDocente.setClavedocente(this.txtClave);
+            
+            docenteLogica.registrarDocente(objDocente);
+            listaDocentes = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de creación de docente", "El docente fue registrado con éxito."));
+            
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
     }
-
-    public void limpiar() {
-        txtdocumentoDocente.setValue("");
-        txtNombreDocente.setValue("");
-        txtApellidoDocente.setValue("");
-        txtCorreoDocente.setValue("");
-        txtTlelefonodocente.setValue("");
-        txtProfesionDocente.setValue("");
-        txtClaveDocente.setValue("");
-        btnRegistrar.setDisabled(false);
-        btnModificar.setDisabled(true);
-        btnEliminar.setDisabled(true);
-    }
     
-    public void seleccionar(SelectEvent e){
-        Docente d = selectedDocente;
-        txtdocumentoDocente.setValue(d.getDocumentodocente()+"");
-        txtNombreDocente.setValue(d.getNombredocente());
-        txtApellidoDocente.setValue(d.getApellidodocente());
-        txtCorreoDocente.setValue(d.getCorreodocente());
-        txtTlelefonodocente.setValue(d.getTelefonodocente());
-        txtProfesionDocente.setValue(d.getProfesiondocente());
-        btnModificar.setDisabled(false);
-        btnEliminar.setDisabled(false);
-        btnRegistrar.setDisabled(true);
-    }
-    
-    public void modificar(){
-    try {
-        Docente nuevoDocente = new Docente();
-        nuevoDocente.setDocumentodocente(Long.parseLong(txtdocumentoDocente.getValue().toString()));
-        nuevoDocente.setNombredocente(txtNombreDocente.getValue().toString());
-        nuevoDocente.setApellidodocente(txtApellidoDocente.getValue().toString());
-        nuevoDocente.setCorreodocente(txtCorreoDocente.getValue().toString());
-        nuevoDocente.setTelefonodocente(txtTlelefonodocente.getValue().toString());
-        nuevoDocente.setProfesiondocente(txtProfesionDocente.getValue().toString());
-        nuevoDocente.setClavedocente(txtClaveDocente.getValue().toString());
-        nuevoDocente.setMateriaList(listaMateriasSeleccionadas);
-        docentelogica.edit(nuevoDocente);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El docente se  modifico correctamente"));
-        listaDocente = null;
-    } catch (Exception ex) {
-        Logger.getLogger(DocenteVista.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    }
-
-    public List<Materia> getListaMaterias() {
-        if(listaMaterias==null){
-            try {
-                listaMaterias = materiaLogica.consultar();
-            } catch (Exception ex) {
-                Logger.getLogger(DocenteVista.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return listaMaterias;
-    }
-
-    public void setListaMaterias(List<Materia> listaMaterias) {
-        this.listaMaterias = listaMaterias;
-    }
-
-    public List<Materia> getListaMateriasSeleccionadas() {
-        return listaMateriasSeleccionadas;
-    }
-
-    public void setListaMateriasSeleccionadas(List<Materia> listaMateriasSeleccionadas) {
-        this.listaMateriasSeleccionadas = listaMateriasSeleccionadas;
-    }
-    
-    public void handleFileUpload(FileUploadEvent event) {
-        // Indica a dónde se deben guardar los archivos de excel a partir de la carpeta build del proyecto.
-        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-        String rutaDestino = (String) servletContext.getRealPath("/excel"); // Sustituye "/" por el directorio ej: "/upload"
-
-        System.out.println("Ruta Server: " + rutaDestino);
-        try {
-            copyFile(rutaDestino, event.getFile().getFileName(), event.getFile().getInputstream());
-            String resultado = docentelogica.importarDatosInstructor(rutaDestino + "\\" + event.getFile().getFileName());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ok: ", resultado));
-           
-        } catch (IOException e) {
-            e.printStackTrace();
+    // Método modificar
+    public void action_modificar(){
+        try{
+            Docente objDocente = new Docente();
+            objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString()));
+            objDocente.setNombredocente(this.txtNombre.getValue().toString());
+            objDocente.setApellidodocente(this.txtApellido.getValue().toString());
+            objDocente.setCorreodocente(this.txtCorreo.getValue().toString());
+            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
+            objDocente.setProfesiondocente(this.txtProfesion.getValue().toString());
+            objDocente.setClavedocente(this.txtClave);
+            
+            docenteLogica.modificarDocente(objDocente);
+            listaDocentes = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de modificación de docente", "El docente fue modificado con éxito."));
+            
         } catch (Exception ex) {
-            Logger.getLogger(DocenteVista.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
     }
     
-    public void copyFile(String rutaDestino, String fileName, InputStream in) {
-        try {
-            OutputStream out = new FileOutputStream(new File(rutaDestino + "\\" + fileName));
-            System.out.println("Ruta Archivo: " + rutaDestino + "\\" +fileName);
-            int read = 0;
-            byte[] bytes = new byte[1024];
-
-            while ((read = in.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-            in.close();
-            out.flush();
-            out.close();
-            //System.out.println("New file created!");
-        } catch (IOException e) {
-            //System.out.println(e.getMessage());
+    // Método eliminar
+    public void action_eliminar(){
+        try{
+            Docente objDocente = new Docente();
+            objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString()));
+            objDocente.setNombredocente(this.txtNombre.getValue().toString());
+            objDocente.setApellidodocente(this.txtApellido.getValue().toString());
+            objDocente.setCorreodocente(this.txtCorreo.getValue().toString());
+            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
+            objDocente.setProfesiondocente(this.txtProfesion.getValue().toString());
+            objDocente.setClavedocente(this.txtClave);
+            
+            docenteLogica.eliminarDocente(objDocente);
+            listaDocentes = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de eliminación de docente", "El docente fue eliminado con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
     }
-
-    public CommandButton getBtnReporte() {
-        return btnReporte;
-    }
-
-    public void setBtnReporte(CommandButton btnReporte) {
-        this.btnReporte = btnReporte;
+    
+    /**
+     * Creates a new instance of DocenteVista
+     */
+    public DocenteVista() {
     }
     
-    
-    public void generarReporteDocente(){
-        try {
-
-                FacesContext fc = FacesContext.getCurrentInstance();
-                ExternalContext ec = fc.getExternalContext();
-                HttpServletRequest sr = ((HttpServletRequest) ec.getRequest());
-                String scheme = sr.getScheme();
-                String serverName = sr.getServerName();
-                int port = sr.getServerPort();
-                String contextPath = sr.getContextPath();
-                String url = scheme + "://" + serverName + ":" + port + contextPath;
-                docentelogica.generarReporteDocentes(url);
-            } catch (Exception ex) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", ex.getMessage()));
-            }
-
-    }
 }

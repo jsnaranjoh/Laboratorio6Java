@@ -3,23 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica;
 
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Carrera;
-import modelo.Materia;
 
 /**
  *
- * @author DILOVE
+ * @author jsnar
  */
 @Local
 public interface CarreraLogicaLocal {
-        void create(Carrera carrera) throws Exception;
-        void edit (Carrera carrera) throws Exception;
-        void remove (Carrera carrera) throws Exception;
-        Carrera find(Integer codigoCarrera) throws Exception;
-        List<Carrera> findAll() throws Exception;       
+    public void registrarCarrera(Carrera carrera) throws Exception;
+    public void modificarCarrera(Carrera carrera) throws Exception;
+    public void eliminarCarrera(Carrera carrera) throws Exception;
+    public Carrera consultarxCodigo (Integer codigo) throws Exception;
+    public List<Carrera> consultarTodas() throws Exception;
 }

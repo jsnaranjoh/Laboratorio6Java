@@ -5,94 +5,92 @@
  */
 package vista;
 
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import logica.EstudianteLogicaLocal;
 import modelo.Estudiante;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author Estudiante
+ * @author NOREÑA
  */
-@ManagedBean
+@Named(value = "estudianteVista")
 @RequestScoped
 public class EstudianteVista {
-   private InputText txtDocumentoEstudiante;
-   private InputText txtNombreEstudiante;
-   private InputText txtApellidoEstudiante;
-   private InputText txtCorreoEstudiante;
-   private InputText txtSemestreEstudiante;
-   private InputText txtClaveEstudiante;
-   private CommandButton btnRegistrar;
-   private CommandButton btnModificar;
-   private CommandButton btnLimpiar;
-   private CommandButton btnEliminar;
-   private List<Estudiante> listaEstudiante;
-   private Estudiante selectedEstudiante;
-   
-   @EJB
-    private EstudianteLogicaLocal estudiantelogica;
-    /**
-     * Creates a new instance of EstudianteVista
-     */
-    public EstudianteVista() {
+
+    private InputText txtDocumento;
+    private InputText txtNombre;
+    private InputText txtApellido;
+    private InputText txtCorreo;
+    private InputText txtSemestre;
+    private String txtClave;
+    
+    private CommandButton btnRegistrar;
+    private CommandButton btnModificar;
+    private CommandButton btnEliminar;
+    private CommandButton btnLimpiar;
+    
+    private List<Estudiante> listaEstudiantes;
+    private Estudiante selectedEstudiante;
+
+    @EJB
+    private EstudianteLogicaLocal estudianteLogica;
+    
+    public InputText getTxtDocumento() {
+        return txtDocumento;
     }
 
-    public InputText getTxtDocumentoEstudiante() {
-        return txtDocumentoEstudiante;
+    public void setTxtDocumento(InputText txtDocumento) {
+        this.txtDocumento = txtDocumento;
     }
 
-    public void setTxtDocumentoEstudiante(InputText txtDocumentoEstudiante) {
-        this.txtDocumentoEstudiante = txtDocumentoEstudiante;
+    public InputText getTxtNombre() {
+        return txtNombre;
     }
 
-    public InputText getTxtNombreEstudiante() {
-        return txtNombreEstudiante;
+    public void setTxtNombre(InputText txtNombre) {
+        this.txtNombre = txtNombre;
     }
 
-    public void setTxtNombreEstudiante(InputText txtNombreEstudiante) {
-        this.txtNombreEstudiante = txtNombreEstudiante;
+    public InputText getTxtApellido() {
+        return txtApellido;
     }
 
-    public InputText getTxtApellidoEstudiante() {
-        return txtApellidoEstudiante;
+    public void setTxtApellido(InputText txtApellido) {
+        this.txtApellido = txtApellido;
     }
 
-    public void setTxtApellidoEstudiante(InputText txtApellidoEstudiante) {
-        this.txtApellidoEstudiante = txtApellidoEstudiante;
+    public InputText getTxtCorreo() {
+        return txtCorreo;
     }
 
-    public InputText getTxtCorreoEstudiante() {
-        return txtCorreoEstudiante;
+    public void setTxtCorreo(InputText txtCorreo) {
+        this.txtCorreo = txtCorreo;
     }
 
-    public void setTxtCorreoEstudiante(InputText txtCorreoEstudiante) {
-        this.txtCorreoEstudiante = txtCorreoEstudiante;
+    public InputText getTxtSemestre() {
+        return txtSemestre;
     }
 
-    public InputText getTxtSemestreEstudiante() {
-        return txtSemestreEstudiante;
+    public void setTxtSemestre(InputText txtSemestre) {
+        this.txtSemestre = txtSemestre;
+    }
+    
+    public String getTxtClave() {
+        return txtClave;
     }
 
-    public void setTxtSemestreEstudiante(InputText txtSemestreEstudiante) {
-        this.txtSemestreEstudiante = txtSemestreEstudiante;
-    }
-
-    public InputText getTxtClaveEstudiante() {
-        return txtClaveEstudiante;
-    }
-
-    public void setTxtClaveEstudiante(InputText txtClaveEstudiante) {
-        this.txtClaveEstudiante = txtClaveEstudiante;
+    public void setTxtClave(String txtClave) {
+        this.txtClave = txtClave;
     }
 
     public CommandButton getBtnRegistrar() {
@@ -111,6 +109,14 @@ public class EstudianteVista {
         this.btnModificar = btnModificar;
     }
 
+    public CommandButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(CommandButton btnEliminar) {
+        this.btnEliminar = btnEliminar;
+    }
+
     public CommandButton getBtnLimpiar() {
         return btnLimpiar;
     }
@@ -119,27 +125,19 @@ public class EstudianteVista {
         this.btnLimpiar = btnLimpiar;
     }
 
-    public CommandButton getBtnEliminar() {
-        return btnEliminar;
-    }
-
-    public void setBtnEliminar(CommandButton btnEliminar) {
-        this.btnEliminar = btnEliminar;
-    }
-    
-    public List<Estudiante> getListaEstudiante() {
-        if(listaEstudiante==null){
+    public List<Estudiante> getListaEstudiantes() {
+        if(listaEstudiantes == null) {
             try {
-                listaEstudiante = estudiantelogica.findAll();
+                listaEstudiantes = estudianteLogica.consultarTodos();
             } catch (Exception ex) {
                 Logger.getLogger(EstudianteVista.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return listaEstudiante;
+        return listaEstudiantes;
     }
 
-    public void setListaEstudiante(List<Estudiante> listaEstudiante) {
-        this.listaEstudiante = listaEstudiante;
+    public void setListaEstudiantes(List<Estudiante> listaEstudiantes) {
+        this.listaEstudiantes = listaEstudiantes;
     }
 
     public Estudiante getSelectedEstudiante() {
@@ -150,41 +148,106 @@ public class EstudianteVista {
         this.selectedEstudiante = selectedEstudiante;
     }
 
-    public EstudianteLogicaLocal getEstudiantelogica() {
-        return estudiantelogica;
+    // Mostrar por interfaz el estudiante seleccionado
+    public void onRowSelect(SelectEvent event) {
+        this.selectedEstudiante = (Estudiante) event.getObject();
+        
+        this.txtDocumento.setValue(selectedEstudiante.getDocumentoestudiante());
+        this.txtNombre.setValue(selectedEstudiante.getNombreestudiante());
+        this.txtApellido.setValue(selectedEstudiante.getApellidoestudiante());
+        this.txtCorreo.setValue(selectedEstudiante.getCorreoestudiante());
+        this.txtSemestre.setValue(selectedEstudiante.getSemestreestudiante());
+        this.txtClave = selectedEstudiante.getClaveestudiante();
+        
+        // Se deshabilita el botón registrar para permitir que el estudiante se puede modificar o eliminar       
+        this.btnRegistrar.setDisabled(true);
+        this.btnModificar.setDisabled(false);
+        this.btnEliminar.setDisabled(false);
+        this.txtDocumento.setDisabled(true);
     }
-
-    public void setEstudiantelogica(EstudianteLogicaLocal estudiantelogica) {
-        this.estudiantelogica = estudiantelogica;
+    
+    // Limpia los campos y reinicia los valores
+    public void limpiar(){
+        this.txtDocumento.setValue("");
+        this.txtNombre.setValue("");
+        this.txtApellido.setValue("");
+        this.txtCorreo.setValue("");
+        this.txtSemestre.setValue("");
+        this.txtClave = "";
+        
+        this.txtDocumento.setDisabled(false);
+        this.btnRegistrar.setDisabled(false);
+        this.btnModificar.setDisabled(true);
+        this.btnEliminar.setDisabled(true);
     }
-    public void accion_registrar() {
+    
+    // Método registrar
+    public void action_registrar(){
         try {
-            Estudiante nuevaEstudiante = new Estudiante();
-            nuevaEstudiante.setDocumentoestudiante(Long.parseLong(txtDocumentoEstudiante.getValue().toString()));
-            nuevaEstudiante.setNombreestudiante(txtNombreEstudiante.getValue().toString());
-            nuevaEstudiante.setApellidoestudiante(txtApellidoEstudiante.getValue().toString());
-            nuevaEstudiante.setCorreoestudiante(txtCorreoEstudiante.getValue().toString());
-            nuevaEstudiante.setSemestreestudiante(Integer.parseInt(txtSemestreEstudiante.getValue().toString()));
-            nuevaEstudiante.setClaveestudiante(txtClaveEstudiante.getValue().toString());
-           estudiantelogica.create(nuevaEstudiante);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje", "El estudiante se  registro correta mente"));
-            listaEstudiante = null;
-        } catch (NumberFormatException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "El numero del documento  debe ser un numero y no letras"));
+            Estudiante objEstudiante = new Estudiante();
+            objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString()));
+            objEstudiante.setNombreestudiante(this.txtNombre.getValue().toString());
+            objEstudiante.setApellidoestudiante(this.txtApellido.getValue().toString());
+            objEstudiante.setCorreoestudiante(this.txtCorreo.getValue().toString());
+            objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString()));
+            objEstudiante.setClaveestudiante(this.txtClave);
+            
+            estudianteLogica.registrarEstudiante(objEstudiante);
+            listaEstudiantes = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de creación de estudiante", "El estudiante fue registrado con éxito."));
+            
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
     }
-
-    public void limpiar() {
-        txtDocumentoEstudiante.setValue("");
-        txtNombreEstudiante.setValue("");
-        txtApellidoEstudiante.setValue("");
-        txtCorreoEstudiante.setValue("");
-        txtSemestreEstudiante.setValue("");
-        txtClaveEstudiante.setValue("");
-        btnRegistrar.setDisabled(false);
-        btnModificar.setDisabled(true);
-        btnEliminar.setDisabled(true);
+    
+    // Método modificar
+    public void action_modificar(){
+        try{
+            Estudiante objEstudiante = new Estudiante();
+            objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString()));
+            objEstudiante.setNombreestudiante(this.txtNombre.getValue().toString());
+            objEstudiante.setApellidoestudiante(this.txtApellido.getValue().toString());
+            objEstudiante.setCorreoestudiante(this.txtCorreo.getValue().toString());
+            objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString()));
+            objEstudiante.setClaveestudiante(this.txtClave);
+            
+            estudianteLogica.modificarEstudiante(objEstudiante);
+            listaEstudiantes = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de modificación de estudiante", "El estudiante fue modificado con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
+        }
     }
+    
+    // Método eliminar
+    public void action_eliminar(){
+        try{
+            Estudiante objEstudiante = new Estudiante();
+            objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString()));
+            objEstudiante.setNombreestudiante(this.txtNombre.getValue().toString());
+            objEstudiante.setApellidoestudiante(this.txtApellido.getValue().toString());
+            objEstudiante.setCorreoestudiante(this.txtCorreo.getValue().toString());
+            objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString()));
+            objEstudiante.setClaveestudiante(this.txtClave);
+            
+            estudianteLogica.eliminarEstudiante(objEstudiante);
+            listaEstudiantes = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de eliminación de estudiante", "El estudiante fue eliminado con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
+        }
+    }    
+    
+    /**
+     * Creates a new instance of EstudianteVista
+     */
+    public EstudianteVista() {
+    }
+    
 }

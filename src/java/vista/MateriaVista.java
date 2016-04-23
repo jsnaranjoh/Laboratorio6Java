@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vista;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import logica.CarreraLogicaLocal;
@@ -28,37 +26,60 @@ import org.primefaces.event.SelectEvent;
 
 /**
  *
- * @author DILOVE
+ * @author NOREÑA
  */
-@ManagedBean
+@Named(value = "materiaVista")
 @RequestScoped
 public class MateriaVista {
-    
+
     private InputText txtNumero;
     private InputText txtNombre;
-    private InputText txtcreditos;
-    private SelectOneMenu cmbCarrera;
-    private ArrayList<SelectItem> opcionesCarrera;
-    private List<Materia> listaMaterias;
-    private Materia selectMateria;
+    private InputText txtCreditos;
+    
+    private SelectOneMenu cmbCarreras;
+    private ArrayList<SelectItem> itemsCarreras;
+    
     private CommandButton btnRegistrar;
     private CommandButton btnModificar;
     private CommandButton btnEliminar;
     private CommandButton btnLimpiar;
     
-    @EJB
-    private CarreraLogicaLocal carreraLogica;
+    private List<Materia> listaMaterias;
+    private Materia selectedMateria;
     
     @EJB
     private MateriaLogicaLocal materiaLogica;
     
+    @EJB
+    private CarreraLogicaLocal carreraLogica;
 
-    /**
-     * Creates a new instance of MateriaVista
-     */
-    public MateriaVista() {
+    public SelectOneMenu getCmbCarreras() {
+        return cmbCarreras;
     }
 
+    public void setCmbCarreras(SelectOneMenu cmbCarreras) {
+        this.cmbCarreras = cmbCarreras;
+    }
+
+    public ArrayList<SelectItem> getItemsCarreras() {
+        try {
+            List<Carrera> listaC = carreraLogica.consultarTodas();
+            itemsCarreras = new ArrayList<>();
+            
+            for(Carrera c: listaC){
+                itemsCarreras.add(new SelectItem(c.getNumerocarrera(), c.getNombrecarrera()));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CarreraVista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return itemsCarreras;
+    }
+
+    public void setItemsCarreras(ArrayList<SelectItem> itemsCarreras) {
+        this.itemsCarreras = itemsCarreras;
+    }  
+    
     public InputText getTxtNumero() {
         return txtNumero;
     }
@@ -75,65 +96,14 @@ public class MateriaVista {
         this.txtNombre = txtNombre;
     }
 
-    public InputText getTxtcreditos() {
-        return txtcreditos;
+    public InputText getTxtCreditos() {
+        return txtCreditos;
     }
 
-    public void setTxtcreditos(InputText txtcreditos) {
-        this.txtcreditos = txtcreditos;
+    public void setTxtCreditos(InputText txtCreditos) {
+        this.txtCreditos = txtCreditos;
     }
-
-    public SelectOneMenu getCmbCarrera() {
-        return cmbCarrera;
-    }
-
-    public void setCmbCarrera(SelectOneMenu cmbCarrera) {
-        this.cmbCarrera = cmbCarrera;
-    }
-
-    public ArrayList<SelectItem> getOpcionesCarrera() {
-        if(opcionesCarrera==null){
-            try {
-                opcionesCarrera = new ArrayList<>();
-                List<Carrera> listacarreras = carreraLogica.findAll();
-                for (int i = 0; i < listacarreras.size(); i++) {
-                    opcionesCarrera.add(new SelectItem(listacarreras.get(i).getNumerocarrera(), listacarreras.get(i).getNombrecarrera()));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(MateriaVista.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        return opcionesCarrera;
-    }
-
-    public void setOpcionesCarrera(ArrayList<SelectItem> opcionesCarrera) {
-        this.opcionesCarrera = opcionesCarrera;
-    }
-
-    public List<Materia> getListaMaterias() {
-        if(listaMaterias==null){
-            try {
-                listaMaterias = materiaLogica.consultar();
-            } catch (Exception ex) {
-                Logger.getLogger(MateriaVista.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return listaMaterias;
-    }
-
-    public void setListaMaterias(List<Materia> listaMaterias) {
-        this.listaMaterias = listaMaterias;
-    }
-
-    public Materia getSelectMateria() {
-        return selectMateria;
-    }
-
-    public void setSelectMateria(Materia selectMateria) {
-        this.selectMateria = selectMateria;
-    }
-
+    
     public CommandButton getBtnRegistrar() {
         return btnRegistrar;
     }
@@ -165,79 +135,129 @@ public class MateriaVista {
     public void setBtnLimpiar(CommandButton btnLimpiar) {
         this.btnLimpiar = btnLimpiar;
     }
-    
-    public void registrar(){
-        try {
-            Materia nuevaMateria = new Materia();
-            Carrera nuevaCarrera = new Carrera();
-            nuevaMateria.setNumeromateria(Integer.parseInt(txtNumero.getValue().toString()));
-            nuevaMateria.setNombremateria(txtNombre.getValue().toString());
-            nuevaMateria.setCreditosmateria(Integer.parseInt(txtcreditos.getValue().toString()));
-            nuevaCarrera.setNumerocarrera(Integer.parseInt(cmbCarrera.getValue().toString()));
-            nuevaMateria.setNumerocarrera(nuevaCarrera);
-            materiaLogica.registrar(nuevaMateria);
-            limpiar();
-            listaMaterias =null;
-        } catch (Exception ex) {
-            Logger.getLogger(MateriaVista.class.getName()).log(Level.SEVERE, null, ex);
+
+    public List<Materia> getListaMaterias() {
+        if(listaMaterias == null) {
+            try {
+                listaMaterias = materiaLogica.consultarTodas();
+            } catch (Exception ex) {
+                Logger.getLogger(CarreraVista.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return listaMaterias;
+    }
+
+    public void setListaMaterias(List<Materia> listaMaterias) {
+        this.listaMaterias = listaMaterias;
+    }
+
+    public Materia getSelectedMateria() {
+        return selectedMateria;
+    }
+
+    public void setSelectedMateria(Materia selectedMateria) {
+        this.selectedMateria = selectedMateria;
+    }    
+
+    // Mostrar por interfaz la materia seleccionada
+    public void onRowSelect(SelectEvent event) {        
+        this.selectedMateria = (Materia) event.getObject();
+        
+        this.txtNumero.setValue(selectedMateria.getNumeromateria());
+        this.txtNombre.setValue(selectedMateria.getNombremateria());
+        this.txtCreditos.setValue(selectedMateria.getCreditosmateria());
+        this.cmbCarreras.setValue(selectedMateria.getNumerocarrera().getNumerocarrera());
+        
+        // Se deshabilita el botón registrar para permitir que la materia se puede modificar o eliminar       
+        this.btnRegistrar.setDisabled(true);
+        this.btnModificar.setDisabled(false);
+        this.btnEliminar.setDisabled(false);
+        this.txtNumero.setDisabled(true);
     }
     
-    
+    // Limpia los campos y reinicia los valores
     public void limpiar(){
-        txtNombre.setValue("");
-        txtNumero.setValue("");
-        cmbCarrera.setValue("seleccione");
-        txtcreditos.setValue("");
-        btnRegistrar.setDisabled(false);
-        btnModificar.setDisabled(true);
-        btnEliminar.setDisabled(true);
-        txtNumero.setDisabled(false);
-    
+        this.txtNumero.setValue("");
+        this.txtNombre.setValue("");
+        this.txtCreditos.setValue("");
+        this.cmbCarreras.setValue("");
+        
+        this.txtNumero.setDisabled(false);
+        this.btnRegistrar.setDisabled(false);
+        this.btnModificar.setDisabled(true);
+        this.btnEliminar.setDisabled(true);
     }
-    
-    public void onRowSelect(SelectEvent evt){
-        Materia m = selectMateria;
-        txtNumero.setValue(m.getNumeromateria());
-        txtNombre.setValue(m.getNombremateria());
-        txtcreditos.setValue(m.getCreditosmateria());
-        cmbCarrera.setValue(m.getNumerocarrera().getNumerocarrera());
-        btnRegistrar.setDisabled(true);
-        btnModificar.setDisabled(false);
-        btnEliminar.setDisabled(false);
-        txtNumero.setDisabled(true);
-    }
-    
-    public void modificar(){
+
+    // Método registrar
+    public void action_registrar(){
         try {
-            Materia m = new Materia();
-            m.setNumeromateria(Integer.parseInt(txtNumero.getValue().toString()));
-            m.setNombremateria(txtNombre.getValue().toString());
-            m.setCreditosmateria(Integer.parseInt(txtcreditos.getValue().toString()));
-            Carrera c = new Carrera();
-            c.setNumerocarrera(Integer.parseInt(cmbCarrera.getValue().toString()));
-            m.setNumerocarrera(c);
-            materiaLogica.modificar(m);
-             limpiar();
-            listaMaterias =null;
-            FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "La materia se modificó con Éxito"));
+            Carrera objCarrera = new Carrera();
+            objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString()));
+            
+            Materia objMateria = new Materia();
+            objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString()));
+            objMateria.setNombremateria(this.txtNombre.getValue().toString());
+            objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString()));
+            objMateria.setNumerocarrera(objCarrera);
+            
+            materiaLogica.registrarMateria(objMateria);
+            listaMaterias = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de creación de carrera", "La carrera fue registrada con éxito."));
+            
         } catch (Exception ex) {
-            Logger.getLogger(MateriaVista.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
     }
     
-    
-    public void eliminar(){
+    // Método modificar
+    public void action_modificar(){
         try {
-            Materia m = new Materia();
-            m.setNumeromateria(Integer.parseInt(txtNumero.getValue().toString()));            
-            materiaLogica.eliminar(m);
-             limpiar();
-            listaMaterias =null;
-            FacesContext.getCurrentInstance().addMessage("Mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "La materia se eliminó con Éxito"));
+            Carrera objCarrera = new Carrera();
+            objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString()));
+            
+            Materia objMateria = new Materia();
+            objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString()));
+            objMateria.setNombremateria(this.txtNombre.getValue().toString());
+            objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString()));
+            objMateria.setNumerocarrera(objCarrera);
+            
+            materiaLogica.modificarMateria(objMateria);
+            listaMaterias = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de modificación de carrera", "La carrera fue modificada con éxito."));
+            
         } catch (Exception ex) {
-            Logger.getLogger(MateriaVista.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
         }
+    }
+    
+    // Método eliminar
+    public void action_eliminar(){
+        try {
+            Carrera objCarrera = new Carrera();
+            objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString()));
+            
+            Materia objMateria = new Materia();
+            objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString()));
+            objMateria.setNombremateria(this.txtNombre.getValue().toString());
+            objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString()));
+            objMateria.setNumerocarrera(objCarrera);
+            
+            materiaLogica.eliminarMateria(objMateria);
+            listaMaterias = null;
+            limpiar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de eliminación de carrera", "La carrera fue eliminada con éxito."));
+            
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error.", ex.getMessage()));
+        }
+    }
+    
+    /**
+     * Creates a new instance of MateriaVista
+     */
+    public MateriaVista() {
     }
     
 }
