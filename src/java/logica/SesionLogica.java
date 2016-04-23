@@ -28,10 +28,10 @@ public class SesionLogica implements SesionLogicaLocal {
     @Override
     public void buscarCamposIncorrectosOVacios(Long documento, String clave) throws Exception {
         if(documento==null) {
-            throw new Exception("Ingrese un documento válido.");
+            throw new Exception("Ingrese un usuario válido.");
         }
         if(clave.equals("")) {
-            throw new Exception("La clave es obligatoria.");
+            throw new Exception("La contraseña es obligatoria.");
         }
     }
     
