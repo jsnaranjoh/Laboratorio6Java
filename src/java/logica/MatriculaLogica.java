@@ -5,10 +5,18 @@
  */
 package logica;
 
+import java.io.File;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import jxl.Sheet;
+import jxl.Workbook;
+import modelo.Estudiante;
+import modelo.Materia;
 import modelo.Matricula;
+import modelo.MatriculaPK;
+import persistencia.EstudianteFacadeLocal;
+import persistencia.MateriaFacadeLocal;
 import persistencia.MatriculaFacadeLocal;
 
 /**
@@ -20,6 +28,12 @@ public class MatriculaLogica implements MatriculaLogicaLocal {
 
     @EJB
     MatriculaFacadeLocal matriculaDAO;
+    
+    @EJB
+    EstudianteFacadeLocal estudianteDAO;
+    
+    @EJB
+    MateriaFacadeLocal materiaDAO;
     
     @Override
     public void registrarMatricula(Matricula matricula) throws Exception {
@@ -108,6 +122,43 @@ public class MatriculaLogica implements MatriculaLogicaLocal {
         return matriculaDAO.findAll();
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public String importarMatriculas(String archivo) throws Exception {
+        Workbook archivoExcel = Workbook.getWorkbook(new File(archivo));
+
+        Sheet hoja = archivoExcel.getSheet(0);
+        int numFilas = hoja.getRows();
+
+        Integer matriculasInsertadas = 0;
+        Integer matriculasExistentes = 0;
+
+        for (int fila=1; fila<numFilas; fila++) {
+            Estudiante e = estudianteDAO.find(Long.parseLong(hoja.getCell(0, fila).getContents()));
+            if(e == null) {
+                throw new Exception("El estudiante no está registrado.");
+            }
+            
+            Materia m = materiaDAO.find(Long.parseLong(hoja.getCell(1, fila).getContents()));
+            if(m == null) {
+                throw new Exception("La materia no existe.");
+            }
+            
+            MatriculaPK matriculaPK = new MatriculaPK(e.getDocumentoestudiante(), m.getNumeromateria());
+            
+            Matricula matricula = new Matricula();
+            matricula.setMatriculaPK(matriculaPK);
+            matricula.setEstudiante(e);
+            matricula.setMateria(m);
+            matricula.setNota(0.);
+            matricula.setEstado("ACTIVO");
+
+            if(matriculaDAO.find(matriculaPK) == null) {
+                matriculaDAO.create(matricula);
+                matriculasInsertadas++;
+            } else {
+                matriculasExistentes++;
+            }
+        }
+        return "Se importaron " + matriculasInsertadas + " matriculas. Ya existían " + matriculasExistentes;
+    }
 }
