@@ -38,11 +38,11 @@ public class IndexFiltro implements Filter{
             if(tipo.equals("docente"))
             {
                 System.out.println("Es docente");
-               ((HttpServletResponse)response).sendRedirect("../faces/gestionDocentes.xhtml");
+               ((HttpServletResponse)response).sendRedirect("/Laboratorio6Java/faces/gestionDocentes.xhtml");
             }else{
                 if(tipo.equals("estudiante")){  
                     System.out.println("Es estudiante");
-                    ((HttpServletResponse)response).sendRedirect("../faces/gestionEstudiantes.xhtml");
+                    ((HttpServletResponse)response).sendRedirect("/Laboratorio6Java/faces/gestionEstudiantes.xhtml");
                 }else{
                     chain.doFilter(request, response);
                 }
