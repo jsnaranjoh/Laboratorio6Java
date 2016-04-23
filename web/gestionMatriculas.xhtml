@@ -48,40 +48,13 @@
                 <p:layoutUnit position="center">
                     <h:form id="formulario">
                         <p:growl id="growl" showDetail="true" sticky="true" />
-                        <p:panelGrid columns="4">
-                            <h:outputText value="Estudiante"/>
-                            <p:selectOneMenu id="cmbEstudiantes" binding="#{matriculaVista.cmbEstudiantes}">
-                                <f:selectItem itemValue="Seleccione" itemLabel="Seleccione"/>
-                                <f:selectItems value="#{matriculaVista.itemsEstudiantes}"/>
-                            </p:selectOneMenu>
-
-                            <h:outputText value="Materia"/>
-                            <p:selectOneMenu id="cmbMaterias" binding="#{matriculaVista.cmbMaterias}">
-                                <f:selectItem itemValue="Seleccione" itemLabel="Seleccione"/>
-                                <f:selectItems value="#{matriculaVista.itemsMaterias}"/>
-                            </p:selectOneMenu>
-
-                            <h:outputText value="Nota"/>
-                            <p:inputText id="txtNota" binding="#{matriculaVista.txtNota}" />
-
-                            <h:outputText value="Estado"/>
-                            <p:selectOneMenu id="cmbEstados" binding="#{matriculaVista.cmbEstados}">
-                                <f:selectItem itemValue="Seleccione" itemLabel="Seleccione"/>
-                                <f:selectItem itemValue="APROBADO" itemLabel="APROBADO"/>
-                                <f:selectItem itemValue="DESAPROBADO" itemLabel="DESAPROBADO"/>
-                            </p:selectOneMenu>
+                        <p:panelGrid columns="1">
+                            <p:commandButton value="Importar" binding="#{matriculaVista.btnRegistrar}" action="#{matriculaVista.action_registrar()}" update=":formulario"/>
                         </p:panelGrid>
-                        <p:panelGrid columns="4">
-                            <p:commandButton value="Registrar" binding="#{matriculaVista.btnRegistrar}" action="#{matriculaVista.action_registrar()}" update=":formulario"/> 
-                            <p:commandButton value="Modificar" binding="#{matriculaVista.btnModificar}" action="#{matriculaVista.action_modificar()}" update=":formulario"/>
-                            <p:commandButton value="Eliminar" binding="#{matriculaVista.btnEliminar}" action="#{matriculaVista.action_eliminar()}" update=":formulario"/>
-                            <p:commandButton value="Limpiar" binding="#{matriculaVista.btnLimpiar}" action="#{matriculaVista.limpiar()}" update=":formulario"/>
-                        </p:panelGrid>
-                        <p:dataTable id="eventsDT" var="matricula" value="#{matriculaVista.listaMatriculas}" selectionMode="single" selection="#{matriculaVista.selectedMatricula}" rowKey="#{matricula.matriculaPK}">
+                        <p:dataTable var="matricula" value="#{matriculaVista.listaMatriculas}" >
                             <f:facet name="header">
                                 Matrículas
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{matriculaVista.onRowSelect}" update=":formulario" />
                             <p:column headerText="Estudiante">
                                 <h:outputText value="#{matricula.estudiante.nombreestudiante} #{matricula.estudiante.apellidoestudiante}" />
                             </p:column>
