@@ -16,6 +16,7 @@ import modelo.Estudiante;
  */
 @Local
 public interface SesionLogicaLocal {
+    public void buscarCamposIncorrectosOVacios(Long documento, String clave) throws Exception;
     public Estudiante iniciarSesionEstudiante(Long documento, String clave) throws Exception;
     public Docente iniciarSesionDocente(Long documento, String clave) throws Exception;
 }

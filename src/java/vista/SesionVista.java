@@ -69,18 +69,25 @@ public class SesionVista {
     
     public void funcion_ingresar(){
         try {
-            String urlD="", urlE="";
-            FacesContext context =FacesContext.getCurrentInstance();
+            String urlE, urlD;
+            FacesContext context = FacesContext.getCurrentInstance();
             ExternalContext extContext = context.getExternalContext();
-            urlD = extContext.encodeActionURL(context.getApplication().
-                    getViewHandler().getActionURL(context, "/gestionDocentes.xhtml"));
+            
             urlE = extContext.encodeActionURL(context.getApplication().
                     getViewHandler().getActionURL(context, "/gestionEstudiantes.xhtml"));
-            Long documento = Long.parseLong(txtUsuario.getValue().toString());
+            
+            urlD = extContext.encodeActionURL(context.getApplication().
+                    getViewHandler().getActionURL(context, "/gestionDocentes.xhtml"));
+            
+            Long documento = null;
+            try {
+                documento = Long.parseLong(txtUsuario.getValue().toString());
+            } catch (Exception ex) {}
             String clave = txtClave.getValue().toString();
+            
+            sesionLogica.buscarCamposIncorrectosOVacios(documento, clave);
             Estudiante e = sesionLogica.iniciarSesionEstudiante(documento, clave);
             if(e!=null){
-                //Se loguea un estudiante
                 extContext.getSessionMap().put("tipo", "estudiante");
                 extContext.getSessionMap().put("usuario", e);
                 extContext.redirect(urlE);
@@ -90,16 +97,10 @@ public class SesionVista {
                     extContext.getSessionMap().put("tipo", "docente");
                     extContext.getSessionMap().put("usuario", d);
                     extContext.redirect(urlD);
-                }else{
-                    FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                            "Error", "Usuario NO Existe"));
                 }
             }
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                            "Error", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));
         }
     }
     

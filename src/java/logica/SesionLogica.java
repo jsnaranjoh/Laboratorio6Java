@@ -26,37 +26,36 @@ public class SesionLogica implements SesionLogicaLocal {
     private DocenteFacadeLocal docenteDAO;
 
     @Override
+    public void buscarCamposIncorrectosOVacios(Long documento, String clave) throws Exception {
+        if(documento==null) {
+            throw new Exception("Ingrese un documento válido.");
+        }
+        if(clave.equals("")) {
+            throw new Exception("La clave es obligatoria.");
+        }
+    }
+    
+    @Override
     public Estudiante iniciarSesionEstudiante(Long documento, String clave) throws Exception {
-        if(documento==null || clave==null){
-            throw new Exception("Los datos de ingreso son obligatorios");
-        }
-        if(clave.equals("")){
-            throw new Exception("La clave es obligatoria");
-        }
-        Estudiante estu = estudianteDAO.find(documento);
-        if(estu!=null){
-            if(!estu.getClaveestudiante().equals(clave)){
+        Estudiante e = estudianteDAO.find(documento);
+        if(e!=null) {
+            if(!e.getClaveestudiante().equals(clave)) {
                 throw new Exception("La contraseña es incorrecta");
             }
         }
-        return estu;
+        return e;
     }
 
     @Override
     public Docente iniciarSesionDocente(Long documento, String clave) throws Exception {
-        if(documento==null || clave==null){
-            throw new Exception("Los datos de ingreso son obligatorios");
-        }
-        if(clave.equals("")){
-            throw new Exception("La clave es obligatoria");
-        }
-        Docente docente = docenteDAO.find(documento);
-        if(docente!=null){
-            if(!docente.getClavedocente().equals(clave)){
+        Docente d = docenteDAO.find(documento);
+        if(d!=null) {
+            if(!d.getClavedocente().equals(clave)) {
                 throw new Exception("La contraseña es incorrecta");
             }
+        } else {
+            throw new Exception("El usuario no existe.");
         }
-        return docente;
+        return d;
     }
-
 }
