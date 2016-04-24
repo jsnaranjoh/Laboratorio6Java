@@ -167,7 +167,6 @@ public class DocenteVista {
         this.txtCorreo.setValue(selectedDocente.getCorreodocente());
         this.txtTelefono.setValue(selectedDocente.getTelefonodocente());
         this.txtProfesion.setValue(selectedDocente.getProfesiondocente());
-        this.txtClave = selectedDocente.getClavedocente();
         
         // Se deshabilita el botón registrar para permitir que el docente se puede modificar o eliminar       
         this.btnRegistrar.setDisabled(true);
@@ -184,7 +183,6 @@ public class DocenteVista {
         this.txtCorreo.setValue("");
         this.txtTelefono.setValue("");
         this.txtProfesion.setValue("");
-        this.txtClave = "";
         
         this.txtDocumento.setDisabled(false);
         this.btnRegistrar.setDisabled(false);

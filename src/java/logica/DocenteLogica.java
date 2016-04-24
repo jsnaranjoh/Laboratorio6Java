@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import modelo.Docente;
+import org.apache.commons.codec.digest.DigestUtils;
 import persistencia.DocenteFacadeLocal;
 
 /**
@@ -58,6 +59,8 @@ public class DocenteLogica implements DocenteLogicaLocal {
             throw new Exception("Docente ya existe.");
         }
         else{
+            String claveEncriptada = DigestUtils.md5Hex(docente.getClavedocente());
+            docente.setClavedocente(claveEncriptada);
             docenteDAO.create(docente);
         }
     }
@@ -84,14 +87,14 @@ public class DocenteLogica implements DocenteLogicaLocal {
                 throw new Exception("E-mail inválído. Ejemplos válidos: \"example@something.com\" o \"example@something.es\"");
             }
             
-            // Dejaremos el teléfono como campo opcional, pues no todos los profesores tienen teléfono
+            if(docente.getTelefonodocente().equals("") || docente.getTelefonodocente() == null){
+                throw new Exception("Campo Teléfono Obligatorio.");
+            }
             
             if(docente.getProfesiondocente().equals("") || docente.getProfesiondocente() == null){
                 throw new Exception("Campo Profesión Docente Obligatorio.");
             }
-            if(docente.getClavedocente().equals("") || docente.getClavedocente() == null){
-                throw new Exception("Campo Clave Docente Obligatorio");
-            }
+            
         }
         
         Docente objDocente = docenteDAO.find(docente.getDocumentodocente());
@@ -104,7 +107,10 @@ public class DocenteLogica implements DocenteLogicaLocal {
             objDocente.setCorreodocente(docente.getCorreodocente());
             objDocente.setTelefonodocente(docente.getTelefonodocente());
             objDocente.setProfesiondocente(docente.getProfesiondocente());
-            objDocente.setClavedocente(docente.getClavedocente());
+            if(!docente.getClavedocente().equals("")) {
+                String claveEncriptada = DigestUtils.md5Hex(docente.getClavedocente());
+                objDocente.setClavedocente(claveEncriptada);
+            }
             docenteDAO.edit(objDocente);
         }
     }

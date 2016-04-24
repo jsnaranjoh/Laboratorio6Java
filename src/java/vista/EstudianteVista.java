@@ -163,7 +163,6 @@ public class EstudianteVista {
         this.txtApellido.setValue(selectedEstudiante.getApellidoestudiante());
         this.txtCorreo.setValue(selectedEstudiante.getCorreoestudiante());
         this.txtSemestre.setValue(selectedEstudiante.getSemestreestudiante());
-        this.txtClave = selectedEstudiante.getClaveestudiante();
         
         // Se deshabilita el botón registrar para permitir que el estudiante se puede modificar o eliminar       
         this.btnRegistrar.setDisabled(true);
@@ -179,7 +178,6 @@ public class EstudianteVista {
         this.txtApellido.setValue("");
         this.txtCorreo.setValue("");
         this.txtSemestre.setValue("");
-        this.txtClave = "";
         
         this.txtDocumento.setDisabled(false);
         this.btnRegistrar.setDisabled(false);

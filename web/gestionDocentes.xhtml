@@ -57,9 +57,9 @@
                             <h:outputText value="Profesión"/>
                             <p:inputText id="txtProfesion" binding="#{docenteVista.txtProfesion}"/>
                             <h:outputText value="Teléfono"/>
-                            <p:inputText id="txttelefono" binding="#{docenteVista.txtTelefono}"/>
+                            <p:inputText id="txtTelefono" binding="#{docenteVista.txtTelefono}"/>
                             <h:outputText value="Clave"/>
-                            <p:inputText id="txtClave" binding="#{docenteVista.txtClave}"/>
+                            <p:password id="txtClave" value="#{docenteVista.txtClave}"/>
                         </p:panelGrid>
                         <p:panelGrid columns="4">
                             <p:commandButton value="Registrar" binding="#{docenteVista.btnRegistrar}" action="#{docenteVista.action_registrar()}" update=":formulario"/> 

@@ -61,6 +61,8 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
             throw new Exception("Estudiante ya existe.");
         }
         else{
+            String claveEncriptada = this.encriptarClave(estudiante.getClaveestudiante());
+            estudiante.setClaveestudiante(claveEncriptada);
             estudianteDAO.create(estudiante);
         }
     }
@@ -90,9 +92,7 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
             if(estudiante.getSemestreestudiante() == 0 || estudiante.getSemestreestudiante() == null){
                 throw new Exception("Campo Semestre Estudiante Obligatorio.");
             }
-            if(estudiante.getClaveestudiante().equals("") || estudiante.getClaveestudiante() == null){
-                throw new Exception("Campo Clave Estudiante Obligatorio.");
-            }
+            
         }
         
         Estudiante objEstudiante = estudianteDAO.find(estudiante.getDocumentoestudiante());
@@ -104,7 +104,10 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
             objEstudiante.setApellidoestudiante(estudiante.getApellidoestudiante());
             objEstudiante.setCorreoestudiante(estudiante.getCorreoestudiante());
             objEstudiante.setSemestreestudiante(estudiante.getSemestreestudiante());
-            objEstudiante.setClaveestudiante(estudiante.getClaveestudiante());
+            if(!estudiante.getClaveestudiante().equals("")) {
+                String claveEncriptada = this.encriptarClave(estudiante.getClaveestudiante());
+                objEstudiante.setClaveestudiante(claveEncriptada);
+            }
             estudianteDAO.edit(objEstudiante);
         }
     }

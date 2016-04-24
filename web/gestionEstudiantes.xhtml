@@ -59,7 +59,7 @@
                             <h:outputText value="Semestre"/>
                             <p:inputText id="txtSemestre" binding="#{estudianteVista.txtSemestre}"/>
                             <h:outputText value="Clave"/>
-                            <p:inputText id="txtClave" binding="#{estudianteVista.txtClave}"/>
+                            <p:password id="txtClave" value="#{estudianteVista.txtClave}"/>
                         </p:panelGrid>
                         <p:panelGrid columns="4">
                             <p:commandButton value="Registrar" binding="#{estudianteVista.btnRegistrar}" action="#{estudianteVista.action_registrar()}" update=":formulario"/> 
