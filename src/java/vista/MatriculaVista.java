@@ -300,12 +300,15 @@ public class MatriculaVista {
     
     public void handleFileUpload(FileUploadEvent event) {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String path = servletContext.getRealPath("/");
+        File f = new File (path + "excel");
+        f.mkdir();
         String rutaDestino = (String) servletContext.getRealPath("/excel");
 
         try {
             copyFile(rutaDestino, event.getFile().getFileName(), event.getFile().getInputstream());
             String resultado = matriculaLogica.importarMatriculas(rutaDestino + "\\" + event.getFile().getFileName());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ok: ", resultado));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de importación: ", resultado));
            
         } catch(Exception ex) {
             Logger.getLogger(MatriculaVista.class.getName()).log(Level.SEVERE, null, ex);

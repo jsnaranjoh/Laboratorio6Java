@@ -159,6 +159,6 @@ public class MatriculaLogica implements MatriculaLogicaLocal {
                 matriculasExistentes++;
             }
         }
-        return "Se importaron " + matriculasInsertadas + " matriculas. Ya existían " + matriculasExistentes;
+        return "Se importaron " + matriculasInsertadas + " matrículas, ya existían " + matriculasExistentes + " matrículas.";
     }
 }
