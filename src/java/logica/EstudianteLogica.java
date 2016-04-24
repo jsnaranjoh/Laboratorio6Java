@@ -6,8 +6,8 @@
 package logica;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import jxl.Sheet;
@@ -176,16 +176,17 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
         return "Se importaton " + estudiantesRegistrados + " estudiantes. Ya exisitían " + estudiantesExistentes + " estudiantes";
     }
 
-    // Obtención de una clava aleatoria para el estudiante
+    //Obtención de una clava aleatoria para el estudiante
     @Override
-    public String obtenerClaveAleatoria(){
+    public String obtenerClaveAleatoria() {
         char[] nums = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
         char[] charKeys = new char[6];
         String clave;
-        
-        // Armo la clave de 6 dígitos
-        for(int i = 0; i < charKeys.length; i++){            
-            char caracter = nums[(int) Math.floor((nums.length - 1) * Math.random())];            
+
+        //Armo la clave de 6 dígitos
+        Random r = new Random();
+        for(int i=0; i<charKeys.length; i++) {
+            char caracter = nums[r.nextInt(nums.length)];
             charKeys[i] = caracter;
         }
         
