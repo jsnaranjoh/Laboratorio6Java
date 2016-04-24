@@ -5,9 +5,13 @@
  */
 package logica;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import jxl.Sheet;
+import jxl.Workbook;
 import modelo.Estudiante;
 import persistencia.EstudianteFacadeLocal;
 
@@ -141,6 +145,50 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
         return estudianteDAO.findAll();
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public String importarEstudiantes(String archivo) throws Exception {
+        Workbook archivoExcel = Workbook.getWorkbook(new File(archivo));
+        Sheet hoja = archivoExcel.getSheet(0);
+        int numFilas = hoja.getRows();
+        
+        Integer estudiantesRegistrados = 0;
+        Integer estudiantesExistentes = 0;
+        
+        for(int fila = 1; fila < numFilas; fila++){
+            Estudiante estudiante = new Estudiante();
+            
+            estudiante.setDocumentoestudiante(Long.parseLong(hoja.getCell(0, fila).getContents()));
+            estudiante.setNombreestudiante(hoja.getCell(1, fila).getContents());
+            estudiante.setApellidoestudiante(hoja.getCell(2, fila).getContents());
+            estudiante.setCorreoestudiante(hoja.getCell(3, fila).getContents());
+            estudiante.setSemestreestudiante(Integer.parseInt(hoja.getCell(4, fila).getContents()));
+            estudiante.setClaveestudiante(this.obtenerClaveAleatoria());
+            
+            if(estudianteDAO.find(estudiante.getDocumentoestudiante()) == null){
+                estudianteDAO.create(estudiante);
+                estudiantesRegistrados++;
+            }
+            else{
+                estudiantesExistentes++;
+            }
+        }
+        return "Se importaton " + estudiantesRegistrados + " estudiantes. Ya exisitían " + estudiantesExistentes + " estudiantes";
+    }
+
+    // Obtención de una clava aleatoria para el estudiante
+    @Override
+    public String obtenerClaveAleatoria(){
+        char[] nums = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] charKeys = new char[6];
+        String clave;
+        
+        // Armo la clave de 6 dígitos
+        for(int i = 0; i < charKeys.length; i++){            
+            char caracter = nums[(int) Math.floor((nums.length - 1) * Math.random())];            
+            charKeys[i] = caracter;
+        }
+        
+        clave = new String(charKeys);
+        return clave;
+    }
 }

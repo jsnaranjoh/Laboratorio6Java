@@ -47,7 +47,10 @@
 
                 <p:layoutUnit position="center">
                     <h:form id="formulario">
-                         <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:panelGrid columns="1">
+                            <p:fileUpload label="Importar Estudiantes" invalidFileMessage="El archivo debe ser de extensión .xls" fileUploadListener="#{estudianteVista.handleFileUpload}" mode="advanced"  update="formulario" auto="true" allowTypes="/(\.|\/)(xls)$/"/>
+                        </p:panelGrid>
                         <p:panelGrid columns="6">
                             <h:outputText value="Documento"/>
                             <p:inputText id="txtNumero" binding="#{estudianteVista.txtDocumento}"/>

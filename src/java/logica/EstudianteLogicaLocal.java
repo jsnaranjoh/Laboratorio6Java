@@ -20,4 +20,6 @@ public interface EstudianteLogicaLocal {
     public void eliminarEstudiante(Estudiante estudiante) throws Exception;
     public Estudiante consultarxcodigo(Integer codigo) throws Exception;
     public List<Estudiante> consultarTodos() throws Exception;
+    public String importarEstudiantes(String archivo) throws Exception;
+    public String obtenerClaveAleatoria() throws Exception;
 }
