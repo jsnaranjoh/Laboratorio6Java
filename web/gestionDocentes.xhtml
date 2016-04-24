@@ -71,6 +71,8 @@
                             <p:commandButton value="Eliminar" binding="#{docenteVista.btnEliminar}" action="#{docenteVista.action_eliminar()}" update=":formulario"/>
                             <p:commandButton value="Limpiar" binding="#{docenteVista.btnLimpiar}" action="#{docenteVista.limpiar()}" update=":formulario"/>
                         </p:panelGrid>
+                        <p:fileUpload label="Importar docentes" invalidFileMessage="El Archivo deber ser de Extensión .XLS" fileUploadListener="#{docenteVista.handleFileUpload}" mode="advanced"  update="growl" auto="false" allowTypes="/(\.|\/)(xls)$/"/>
+                        <p:dataTable id="eventsDT" var="docente" value="#{docenteVista.listaDocentes}" selectionMode="single" selection="#{docenteVista.selectedDocente}" rowKey="#{docente.documentodocente}">
                             <f:facet name="header">
                                 Docentes
                             </f:facet>
