@@ -176,7 +176,7 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
                 estudiantesExistentes++;
             }
         }
-        return "Se importaton " + estudiantesRegistrados + " estudiantes. Ya exisitían " + estudiantesExistentes + " estudiantes";
+        return "Se importaron " + estudiantesRegistrados + " estudiantes, ya existían " + estudiantesExistentes + " estudiantes.";
     }
 
     //Obtención de una clava aleatoria para el estudiante
