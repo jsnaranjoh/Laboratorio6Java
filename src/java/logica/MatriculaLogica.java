@@ -132,13 +132,13 @@ public class MatriculaLogica implements MatriculaLogicaLocal {
         Integer matriculasInsertadas = 0;
         Integer matriculasExistentes = 0;
 
-        for (int fila=1; fila<numFilas; fila++) {
+        for(int fila=1; fila<numFilas; fila++) {
             Estudiante e = estudianteDAO.find(Long.parseLong(hoja.getCell(0, fila).getContents()));
             if(e == null) {
                 throw new Exception("El estudiante no está registrado.");
             }
             
-            Materia m = materiaDAO.find(Long.parseLong(hoja.getCell(1, fila).getContents()));
+            Materia m = materiaDAO.find(Integer.parseInt(hoja.getCell(1, fila).getContents()));
             if(m == null) {
                 throw new Exception("La materia no existe.");
             }

@@ -49,7 +49,7 @@
                     <h:form id="formulario">
                         <p:growl id="growl" showDetail="true" sticky="true" />
                         <p:panelGrid columns="1">
-                            <p:fileUpload label="Importar" invalidFileMessage="El archivo debe ser de extensión .xls" fileUploadListener="#{matriculaVista.handleFileUpload}" mode="advanced"  update="growl" auto="false" allowTypes="/(\.|\/)(xls)$/"/>
+                            <p:fileUpload label="Importar" invalidFileMessage="El archivo debe ser de extensión .xls" fileUploadListener="#{matriculaVista.handleFileUpload}" mode="advanced"  update="growl" auto="true" allowTypes="/(\.|\/)(xls)$/"/>
                         </p:panelGrid>
                         <p:dataTable var="matricula" value="#{matriculaVista.listaMatriculas}" >
                             <f:facet name="header">
