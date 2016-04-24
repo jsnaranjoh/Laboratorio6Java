@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import modelo.Docente;
 import modelo.Estudiante;
+import org.apache.commons.codec.digest.DigestUtils;
 import persistencia.DocenteFacadeLocal;
 import persistencia.EstudianteFacadeLocal;
 
@@ -39,7 +40,8 @@ public class SesionLogica implements SesionLogicaLocal {
     public Estudiante iniciarSesionEstudiante(Long documento, String clave) throws Exception {
         Estudiante e = estudianteDAO.find(documento);
         if(e!=null) {
-            if(!e.getClaveestudiante().equals(clave)) {
+            String claveEncriptada = DigestUtils.md5Hex(clave);
+            if(!e.getClaveestudiante().equals(claveEncriptada)) {
                 throw new Exception("La clave es incorrecta.");
             }
         }
@@ -50,7 +52,8 @@ public class SesionLogica implements SesionLogicaLocal {
     public Docente iniciarSesionDocente(Long documento, String clave) throws Exception {
         Docente d = docenteDAO.find(documento);
         if(d!=null) {
-            if(!d.getClavedocente().equals(clave)) {
+            String claveEncriptada = DigestUtils.md5Hex(clave);
+            if(!d.getClavedocente().equals(claveEncriptada)) {
                 throw new Exception("La clave es incorrecta.");
             }
         } else {

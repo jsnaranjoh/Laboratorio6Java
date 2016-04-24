@@ -163,7 +163,7 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
             estudiante.setApellidoestudiante(hoja.getCell(2, fila).getContents());
             estudiante.setCorreoestudiante(hoja.getCell(3, fila).getContents());
             estudiante.setSemestreestudiante(Integer.parseInt(hoja.getCell(4, fila).getContents()));
-            estudiante.setClaveestudiante(this.encriptarPassword(this.obtenerClaveAleatoria()));
+            estudiante.setClaveestudiante(this.encriptarClave(this.obtenerClaveAleatoria()));
             
             if(estudianteDAO.find(estudiante.getDocumentoestudiante()) == null){
                 estudianteDAO.create(estudiante);
@@ -195,9 +195,8 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
     }
 
     @Override
-    public String encriptarPassword(String password) throws Exception {
-        String encriptMD5 = DigestUtils.md5Hex(password);
-        System.out.println("md5:" + encriptMD5);
-        return encriptMD5;
+    public String encriptarClave(String clave) throws Exception {
+        String claveEncriptada = DigestUtils.md5Hex(clave);
+        return claveEncriptada;
     }
 }
