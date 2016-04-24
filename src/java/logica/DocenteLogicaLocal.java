@@ -20,5 +20,4 @@ public interface DocenteLogicaLocal {
     public void eliminarDocente(Docente docente) throws Exception;
     public Docente consultarxcodigo(Integer codigo) throws Exception;
     public List<Docente> consultarTodos() throws Exception;
-    String importarDatosInstructor(String archivo) throws Exception;
 }

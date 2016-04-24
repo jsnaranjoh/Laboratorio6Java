@@ -151,38 +151,6 @@ public class DocenteLogica implements DocenteLogicaLocal {
     @Override
     public List<Docente> consultarTodos() throws Exception {
         return docenteDAO.findAll();
-    }
-
-    @Override
-    public String importarDatosInstructor(String archivo) throws Exception {
-        Workbook archivoExcel = Workbook.getWorkbook(new File(archivo));
-        //Recorrer las filas de la primera hoja
-        Sheet hoja = archivoExcel.getSheet(0);
-        int numFilas = hoja.getRows();
-
-        docentesInsertados = 0;
-        docentesExistentes = 0;
-
-        for (int fila = 1; fila < numFilas; fila++) { // Recorre cada 
-            Docente nuevoDocente = new Docente();
-
-            nuevoDocente.setDocumentodocente(Long.parseLong(hoja.getCell(0, fila).getContents()));
-            nuevoDocente.setNombredocente(hoja.getCell(1, fila).getContents());
-            nuevoDocente.setApellidodocente(hoja.getCell(2, fila).getContents());
-            nuevoDocente.setCorreodocente(hoja.getCell(3, fila).getContents());
-            nuevoDocente.setTelefonodocente(hoja.getCell(4, fila).getContents());
-            nuevoDocente.setProfesiondocente(hoja.getCell(5, fila).getContents());
-            nuevoDocente.setClavedocente(hoja.getCell(0, fila).getContents());
-
-            Docente d = docenteDAO.find(nuevoDocente.getDocumentodocente());
-            if (d == null) {
-                docenteDAO.create(nuevoDocente);
-                docentesInsertados++;
-            } else {
-                docentesExistentes++;
-            }
-        }
-        return "Se registraron " + docentesInsertados + " docentes. Ya existían " + docentesExistentes;
     }    
     
     // Add business logic below. (Right-click in editor and choose
