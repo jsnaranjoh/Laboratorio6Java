@@ -22,4 +22,5 @@ public interface EstudianteLogicaLocal {
     public List<Estudiante> consultarTodos() throws Exception;
     public String importarEstudiantes(String archivo) throws Exception;
     public String obtenerClaveAleatoria() throws Exception;
+    public String encriptarPassword(String password) throws Exception;
 }
