@@ -308,10 +308,10 @@ public class MatriculaVista {
         try {
             copyFile(rutaDestino, event.getFile().getFileName(), event.getFile().getInputstream());
             String resultado = matriculaLogica.importarMatriculas(rutaDestino + "\\" + event.getFile().getFileName());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de importación: ", resultado));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de importación", resultado));
            
         } catch(Exception ex) {
-            Logger.getLogger(MatriculaVista.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));
         }
     }
     
