@@ -34,12 +34,10 @@ public class EstudianteFiltro implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try{
         String tipo=((HttpServletRequest) request).getSession().getAttribute("tipo").toString();
-            System.out.println("Tipo "+tipo);
         if(tipo!=null)
         {
             if(!tipo.equals("estudiante"))
             {
-               // Docente docente = (Docente) ((HttpServletRequest)request).getSession().getAttribute("usuario");
                 ((HttpServletResponse)response).sendRedirect("../faces/sesionInvalida.xhtml");
             }else{
                 Estudiante estudiante =(Estudiante)((HttpServletRequest)request).getSession().getAttribute("usuario");
