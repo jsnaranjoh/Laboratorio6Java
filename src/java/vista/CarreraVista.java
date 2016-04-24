@@ -137,7 +137,7 @@ public class CarreraVista {
     public void action_registrar(){
         try {
             Carrera objCarrera = new Carrera();
-            objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString()));
+            try { objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString())); } catch(Exception ex) {}
             objCarrera.setNombrecarrera(this.txtNombre.getValue().toString());
             
             carreraLogica.registrarCarrera(objCarrera);
@@ -154,7 +154,7 @@ public class CarreraVista {
     public void action_modificar(){
         try {
             Carrera objCarrera = new Carrera();
-            objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString()));
+            try { objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString())); } catch(Exception ex) {}
             objCarrera.setNombrecarrera(this.txtNombre.getValue().toString());
             
             carreraLogica.modificarCarrera(objCarrera);
@@ -171,7 +171,7 @@ public class CarreraVista {
     public void action_eliminar(){
         try {
             Carrera objCarrera = new Carrera();
-            objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString()));
+            try { objCarrera.setNumerocarrera(Integer.parseInt(this.txtNumero.getValue().toString())); } catch(Exception ex) {}
             objCarrera.setNombrecarrera(this.txtNombre.getValue().toString());
             
             carreraLogica.eliminarCarrera(objCarrera);

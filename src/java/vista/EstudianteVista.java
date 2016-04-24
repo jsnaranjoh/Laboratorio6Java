@@ -189,11 +189,11 @@ public class EstudianteVista {
     public void action_registrar(){
         try {
             Estudiante objEstudiante = new Estudiante();
-            objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString()));
+            try { objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString())); } catch(Exception ex) {}
             objEstudiante.setNombreestudiante(this.txtNombre.getValue().toString());
             objEstudiante.setApellidoestudiante(this.txtApellido.getValue().toString());
             objEstudiante.setCorreoestudiante(this.txtCorreo.getValue().toString());
-            objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString()));
+            try { objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString())); } catch(Exception ex) {}
             objEstudiante.setClaveestudiante(this.txtClave);
             
             estudianteLogica.registrarEstudiante(objEstudiante);
@@ -210,11 +210,11 @@ public class EstudianteVista {
     public void action_modificar(){
         try{
             Estudiante objEstudiante = new Estudiante();
-            objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString()));
+            try { objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString())); } catch(Exception ex) {}
             objEstudiante.setNombreestudiante(this.txtNombre.getValue().toString());
             objEstudiante.setApellidoestudiante(this.txtApellido.getValue().toString());
             objEstudiante.setCorreoestudiante(this.txtCorreo.getValue().toString());
-            objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString()));
+            try { objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString())); } catch(Exception ex) {}
             objEstudiante.setClaveestudiante(this.txtClave);
             
             estudianteLogica.modificarEstudiante(objEstudiante);
@@ -231,11 +231,11 @@ public class EstudianteVista {
     public void action_eliminar(){
         try{
             Estudiante objEstudiante = new Estudiante();
-            objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString()));
+            try { objEstudiante.setDocumentoestudiante(Long.parseLong(this.txtDocumento.getValue().toString())); } catch(Exception ex) {}
             objEstudiante.setNombreestudiante(this.txtNombre.getValue().toString());
             objEstudiante.setApellidoestudiante(this.txtApellido.getValue().toString());
             objEstudiante.setCorreoestudiante(this.txtCorreo.getValue().toString());
-            objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString()));
+            try { objEstudiante.setSemestreestudiante(Integer.parseInt(this.txtSemestre.getValue().toString())); } catch(Exception ex) {}
             objEstudiante.setClaveestudiante(this.txtClave);
             
             estudianteLogica.eliminarEstudiante(objEstudiante);

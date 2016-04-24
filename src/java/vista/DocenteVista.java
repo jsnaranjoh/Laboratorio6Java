@@ -194,12 +194,12 @@ public class DocenteVista {
     public void action_registrar(){
         try {
             Docente objDocente = new Docente();
-            objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString()));
+            try { objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString())); } catch(Exception ex) {}
             objDocente.setNombredocente(this.txtNombre.getValue().toString());
             objDocente.setApellidodocente(this.txtApellido.getValue().toString());
             objDocente.setCorreodocente(this.txtCorreo.getValue().toString());
-            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
             objDocente.setProfesiondocente(this.txtProfesion.getValue().toString());
+            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
             objDocente.setClavedocente(this.txtClave);
             
             docenteLogica.registrarDocente(objDocente);
@@ -216,12 +216,12 @@ public class DocenteVista {
     public void action_modificar(){
         try{
             Docente objDocente = new Docente();
-            objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString()));
+            try { objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString())); } catch(Exception ex) {}
             objDocente.setNombredocente(this.txtNombre.getValue().toString());
             objDocente.setApellidodocente(this.txtApellido.getValue().toString());
             objDocente.setCorreodocente(this.txtCorreo.getValue().toString());
-            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
             objDocente.setProfesiondocente(this.txtProfesion.getValue().toString());
+            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
             objDocente.setClavedocente(this.txtClave);
             
             docenteLogica.modificarDocente(objDocente);
@@ -238,12 +238,12 @@ public class DocenteVista {
     public void action_eliminar(){
         try{
             Docente objDocente = new Docente();
-            objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString()));
+            try { objDocente.setDocumentodocente(Long.parseLong(this.txtDocumento.getValue().toString())); } catch(Exception ex) {}
             objDocente.setNombredocente(this.txtNombre.getValue().toString());
             objDocente.setApellidodocente(this.txtApellido.getValue().toString());
             objDocente.setCorreodocente(this.txtCorreo.getValue().toString());
-            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
             objDocente.setProfesiondocente(this.txtProfesion.getValue().toString());
+            objDocente.setTelefonodocente(this.txtTelefono.getValue().toString());
             objDocente.setClavedocente(this.txtClave);
             
             docenteLogica.eliminarDocente(objDocente);

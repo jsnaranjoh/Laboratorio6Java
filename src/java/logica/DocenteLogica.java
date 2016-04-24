@@ -28,7 +28,7 @@ public class DocenteLogica implements DocenteLogicaLocal {
             throw new Exception("Campos vacíos.");
         }
         else{
-            if(docente.getDocumentodocente() == 0 || docente.getDocumentodocente() == null){
+            if(docente.getDocumentodocente() == null || docente.getDocumentodocente() == 0){
                 throw new Exception("Campo Documento Docente Obligatorio.");
             }
             if(docente.getNombredocente().equals("") || docente.getNombredocente() == null){
@@ -43,11 +43,11 @@ public class DocenteLogica implements DocenteLogicaLocal {
             if(!docente.getCorreodocente().contains("@") && (!docente.getCorreodocente().endsWith(".com") || !docente.getCorreodocente().endsWith(".es"))){
                 throw new Exception("E-mail inválído. Ejemplos válidos: \"example@something.com\" o \"example@something.es\"");
             }
-            if(docente.getTelefonodocente().equals("") || docente.getTelefonodocente() == null){
-                throw new Exception("Campo Teléfono Obligatorio.");
-            }
             if(docente.getProfesiondocente().equals("") || docente.getProfesiondocente() == null){
                 throw new Exception("Campo Profesión Docente Obligatorio.");
+            }
+            if(docente.getTelefonodocente().equals("") || docente.getTelefonodocente() == null){
+                throw new Exception("Campo Teléfono Obligatorio.");
             }
             if(docente.getClavedocente().equals("") || docente.getClavedocente() == null){
                 throw new Exception("Campo Clave Docente Obligatorio");

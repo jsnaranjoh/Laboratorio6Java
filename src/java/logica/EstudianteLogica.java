@@ -32,7 +32,7 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
             throw new Exception("Campos vacíos.");
         }
         else{
-            if(estudiante.getDocumentoestudiante() == 0 || estudiante.getDocumentoestudiante() == null){
+            if(estudiante.getDocumentoestudiante() == null || estudiante.getDocumentoestudiante() == 0){
                 throw new Exception("Campo Documento Estudiante Obligatorio.");
             }
             if(estudiante.getNombreestudiante().equals("") || estudiante.getNombreestudiante() == null){
@@ -48,7 +48,7 @@ public class EstudianteLogica implements EstudianteLogicaLocal {
                     (!estudiante.getCorreoestudiante().endsWith(".com") || !estudiante.getCorreoestudiante().endsWith(".es"))){
                 throw new Exception("E-mail inválído. Ejemplos válidos: \"example@something.com\" o \"example@something.es\"");
             }
-            if(estudiante.getSemestreestudiante() == 0 || estudiante.getSemestreestudiante() == null){
+            if(estudiante.getSemestreestudiante() == null || estudiante.getSemestreestudiante() == 0){
                 throw new Exception("Campo Semestre Estudiante Obligatorio.");
             }
             if(estudiante.getClaveestudiante().equals("") || estudiante.getClaveestudiante() == null){
