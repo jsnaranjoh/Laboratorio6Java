@@ -5,12 +5,9 @@
  */
 package logica;
 
-import java.io.File;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import jxl.Sheet;
-import jxl.Workbook;
 import modelo.Docente;
 import persistencia.DocenteFacadeLocal;
 
@@ -23,9 +20,6 @@ public class DocenteLogica implements DocenteLogicaLocal {
 
     @EJB
     DocenteFacadeLocal docenteDAO;
-
-    private int docentesInsertados;
-    private int docentesExistentes;
     
     @Override
     public void registrarDocente(Docente docente) throws Exception {
@@ -153,38 +147,6 @@ public class DocenteLogica implements DocenteLogicaLocal {
         return docenteDAO.findAll();
     }
 
-    @Override
-    public String importarDatosInstructor(String archivo) throws Exception {
-        Workbook archivoExcel = Workbook.getWorkbook(new File(archivo));
-        //Recorrer las filas de la primera hoja
-        Sheet hoja = archivoExcel.getSheet(0);
-        int numFilas = hoja.getRows();
-
-        docentesInsertados = 0;
-        docentesExistentes = 0;
-
-        for (int fila = 1; fila < numFilas; fila++) { // Recorre cada 
-            Docente nuevoDocente = new Docente();
-
-            nuevoDocente.setDocumentodocente(Long.parseLong(hoja.getCell(0, fila).getContents()));
-            nuevoDocente.setNombredocente(hoja.getCell(1, fila).getContents());
-            nuevoDocente.setApellidodocente(hoja.getCell(2, fila).getContents());
-            nuevoDocente.setCorreodocente(hoja.getCell(3, fila).getContents());
-            nuevoDocente.setTelefonodocente(hoja.getCell(4, fila).getContents());
-            nuevoDocente.setProfesiondocente(hoja.getCell(5, fila).getContents());
-            nuevoDocente.setClavedocente(hoja.getCell(0, fila).getContents());
-
-            Docente d = docenteDAO.find(nuevoDocente.getDocumentodocente());
-            if (d == null) {
-                docenteDAO.create(nuevoDocente);
-                docentesInsertados++;
-            } else {
-                docentesExistentes++;
-            }
-        }
-        return "Se registraron " + docentesInsertados + " docentes. Ya existían " + docentesExistentes;
-    }    
-    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }
