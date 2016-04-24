@@ -27,16 +27,16 @@ public class MateriaLogica implements MateriaLogicaLocal {
             throw new Exception("Campos vacíos.");   
         }
         else{
-            if(materia.getNumeromateria() == 0 || materia.getNumerocarrera() == null){
+            if(materia.getNumeromateria()== null){
                 throw new Exception("El número de la Materia es Obligatorio.");
             }
             if(materia.getNombremateria().equals("") || materia.getNombremateria() == null){
                 throw new Exception("El nombre de la Materia es Obligatorio.");
             }
-            if(materia.getCreditosmateria() == 0 || materia.getCreditosmateria() == null){
+            if(materia.getCreditosmateria() == null || materia.getCreditosmateria() == 0){
                 throw new Exception("Toda materia tiene al menos 1 crédito.");
             }
-            if(materia.getNumerocarrera() == null){
+            if(materia.getNumerocarrera() == null || materia.getNumerocarrera().getNumerocarrera() == 0){
                 throw new Exception("Toda materia debe pertenecer a una carrera.");
             }
         }

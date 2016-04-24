@@ -41,16 +41,16 @@ public class MatriculaLogica implements MatriculaLogicaLocal {
             throw new Exception("Campos vacíos.");
         }
         else{
-            if(matricula.getEstudiante() == null){
+            if(matricula.getEstudiante().getDocumentoestudiante() == null){
                 throw new Exception("No se ha seleccionado ningún Estudiante.");
             }
-            if(matricula.getMateria() == null){
+            if(matricula.getMateria().getNumeromateria() == null){
                 throw new Exception("No se ha seleccionado ninguna Materia.");
             }
             if(matricula.getNota() == null){
                 throw new Exception("Campo Nota Obligatorio.");
             }
-            if(matricula.getEstado().equals("") || matricula.getEstado() == null){
+            if(matricula.getEstado() == null || matricula.getEstado().equals("0")){
                 throw new Exception("Campo Estado Obligatorio.");
             }
         }

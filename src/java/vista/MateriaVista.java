@@ -192,12 +192,12 @@ public class MateriaVista {
     public void action_registrar(){
         try {
             Carrera objCarrera = new Carrera();
-            objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString()));
+            try { objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString())); } catch(Exception ex) {}
             
             Materia objMateria = new Materia();
-            objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString()));
+            try { objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString())); } catch(Exception ex) {}
             objMateria.setNombremateria(this.txtNombre.getValue().toString());
-            objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString()));
+            try { objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString())); } catch(Exception ex) {}
             objMateria.setNumerocarrera(objCarrera);
             
             materiaLogica.registrarMateria(objMateria);
@@ -214,12 +214,12 @@ public class MateriaVista {
     public void action_modificar(){
         try {
             Carrera objCarrera = new Carrera();
-            objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString()));
+            try { objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString())); } catch(Exception ex) {}
             
             Materia objMateria = new Materia();
-            objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString()));
+            try { objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString())); } catch(Exception ex) {}
             objMateria.setNombremateria(this.txtNombre.getValue().toString());
-            objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString()));
+            try { objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString())); } catch(Exception ex) {}
             objMateria.setNumerocarrera(objCarrera);
             
             materiaLogica.modificarMateria(objMateria);
@@ -236,12 +236,12 @@ public class MateriaVista {
     public void action_eliminar(){
         try {
             Carrera objCarrera = new Carrera();
-            objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString()));
+            try { objCarrera.setNumerocarrera(Integer.parseInt(this.cmbCarreras.getValue().toString())); } catch(Exception ex) {}
             
             Materia objMateria = new Materia();
-            objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString()));
+            try { objMateria.setNumeromateria(Integer.parseInt(this.txtNumero.getValue().toString())); } catch(Exception ex) {}
             objMateria.setNombremateria(this.txtNombre.getValue().toString());
-            objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString()));
+            try { objMateria.setCreditosmateria(Integer.parseInt(this.txtCreditos.getValue().toString())); } catch(Exception ex) {}
             objMateria.setNumerocarrera(objCarrera);
             
             materiaLogica.eliminarMateria(objMateria);

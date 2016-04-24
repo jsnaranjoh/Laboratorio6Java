@@ -7,7 +7,6 @@ package vista;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -226,16 +225,18 @@ public class MatriculaVista {
     public void action_registrar(){
         try {
             Estudiante objEstudiante = new Estudiante();
-            objEstudiante.setDocumentoestudiante(Long.parseLong(this.cmbEstudiantes.getValue().toString()));
+            try { objEstudiante.setDocumentoestudiante(Long.parseLong(this.cmbEstudiantes.getValue().toString())); } catch(Exception ex) {}
             Materia objMateria = new Materia();
-            objMateria.setNumeromateria(Integer.parseInt(this.cmbMaterias.getValue().toString()));
-            MatriculaPK objMatriculaPK = new MatriculaPK(objEstudiante.getDocumentoestudiante(), objMateria.getNumeromateria());
+            try { objMateria.setNumeromateria(Integer.parseInt(this.cmbMaterias.getValue().toString())); } catch(Exception ex) {}
             
             Matricula objMatricula = new Matricula();
-            objMatricula.setMatriculaPK(objMatriculaPK);
+            try {
+                MatriculaPK objMatriculaPK = new MatriculaPK(objEstudiante.getDocumentoestudiante(), objMateria.getNumeromateria());
+                objMatricula.setMatriculaPK(objMatriculaPK);
+            } catch(Exception ex) {}
             objMatricula.setEstudiante(objEstudiante);
             objMatricula.setMateria(objMateria);
-            objMatricula.setNota(Double.parseDouble(this.txtNota.getValue().toString()));
+            try { objMatricula.setNota(Double.parseDouble(this.txtNota.getValue().toString())); } catch(Exception ex) {}
             objMatricula.setEstado(this.cmbEstados.getValue().toString());
             
             matriculaLogica.registrarMatricula(objMatricula);
@@ -251,16 +252,18 @@ public class MatriculaVista {
     public void action_modificar(){
         try {
             Estudiante objEstudiante = new Estudiante();
-            objEstudiante.setDocumentoestudiante(Long.parseLong(this.cmbEstudiantes.getValue().toString()));
+            try { objEstudiante.setDocumentoestudiante(Long.parseLong(this.cmbEstudiantes.getValue().toString())); } catch(Exception ex) {}
             Materia objMateria = new Materia();
-            objMateria.setNumeromateria(Integer.parseInt(this.cmbMaterias.getValue().toString()));
-            MatriculaPK objMatriculaPK = new MatriculaPK(objEstudiante.getDocumentoestudiante(), objMateria.getNumeromateria());
+            try { objMateria.setNumeromateria(Integer.parseInt(this.cmbMaterias.getValue().toString())); } catch(Exception ex) {}
             
             Matricula objMatricula = new Matricula();
-            objMatricula.setMatriculaPK(objMatriculaPK);
+            try {
+                MatriculaPK objMatriculaPK = new MatriculaPK(objEstudiante.getDocumentoestudiante(), objMateria.getNumeromateria());
+                objMatricula.setMatriculaPK(objMatriculaPK);
+            } catch(Exception ex) {}
             objMatricula.setEstudiante(objEstudiante);
             objMatricula.setMateria(objMateria);
-            objMatricula.setNota(Double.parseDouble(this.txtNota.getValue().toString()));
+            try { objMatricula.setNota(Double.parseDouble(this.txtNota.getValue().toString())); } catch(Exception ex) {}
             objMatricula.setEstado(this.cmbEstados.getValue().toString());
             
             matriculaLogica.modificarMatricula(objMatricula);
@@ -276,16 +279,18 @@ public class MatriculaVista {
     public void action_eliminar(){
         try {
             Estudiante objEstudiante = new Estudiante();
-            objEstudiante.setDocumentoestudiante(Long.parseLong(this.cmbEstudiantes.getValue().toString()));
+            try { objEstudiante.setDocumentoestudiante(Long.parseLong(this.cmbEstudiantes.getValue().toString())); } catch(Exception ex) {}
             Materia objMateria = new Materia();
-            objMateria.setNumeromateria(Integer.parseInt(this.cmbMaterias.getValue().toString()));
-            MatriculaPK objMatriculaPK = new MatriculaPK(objEstudiante.getDocumentoestudiante(), objMateria.getNumeromateria());
+            try { objMateria.setNumeromateria(Integer.parseInt(this.cmbMaterias.getValue().toString())); } catch(Exception ex) {}
             
             Matricula objMatricula = new Matricula();
-            objMatricula.setMatriculaPK(objMatriculaPK);
+            try {
+                MatriculaPK objMatriculaPK = new MatriculaPK(objEstudiante.getDocumentoestudiante(), objMateria.getNumeromateria());
+                objMatricula.setMatriculaPK(objMatriculaPK);
+            } catch(Exception ex) {}
             objMatricula.setEstudiante(objEstudiante);
             objMatricula.setMateria(objMateria);
-            objMatricula.setNota(Double.parseDouble(this.txtNota.getValue().toString()));
+            try { objMatricula.setNota(Double.parseDouble(this.txtNota.getValue().toString())); } catch(Exception ex) {}
             objMatricula.setEstado(this.cmbEstados.getValue().toString());
             
             matriculaLogica.eliminarMatricula(objMatricula);
