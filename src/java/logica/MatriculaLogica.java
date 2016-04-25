@@ -135,12 +135,12 @@ public class MatriculaLogica implements MatriculaLogicaLocal {
         for(int fila=1; fila<numFilas; fila++) {
             Estudiante e = estudianteDAO.find(Long.parseLong(hoja.getCell(0, fila).getContents()));
             if(e == null) {
-                throw new Exception("El estudiante no está registrado.");
+                throw new Exception("Hay estudiantes que no están registrados.");
             }
             
             Materia m = materiaDAO.find(Integer.parseInt(hoja.getCell(1, fila).getContents()));
             if(m == null) {
-                throw new Exception("La materia no existe.");
+                throw new Exception("Hay materias que no están registradas.");
             }
             
             MatriculaPK matriculaPK = new MatriculaPK(e.getDocumentoestudiante(), m.getNumeromateria());

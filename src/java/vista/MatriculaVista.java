@@ -316,7 +316,15 @@ public class MatriculaVista {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información de importación", resultado));
            
         } catch(Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));
+            if(ex.getMessage().equals("Hay materias que no están registradas."))
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage() + 
+                        "<br/>" +   
+                        "<a href='../faces/gestionMaterias.xhtml'>Clic aquí si quieres registrarlas.</a>"));         
+            }
+            else{
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", ex.getMessage()));                
+            }
         }
     }
     
